@@ -1,9 +1,12 @@
 import React from 'react';
+import appLogo from '@/src/assets/images/website_logo_1787080090142.jpg';
+import claudeLogo from '@/src/assets/images/claude_logo_1787079507325.jpg';
+import chatgptLogo from '@/src/assets/images/chatgpt_logo_1787079519757.jpg';
 
 // Generated asset paths
-export const APP_LOGO_SRC = '/src/assets/images/website_logo_1787080090142.jpg';
-export const CLAUDE_LOGO_SRC = '/src/assets/images/claude_logo_1787079507325.jpg';
-export const CHATGPT_LOGO_SRC = '/src/assets/images/chatgpt_logo_1787079519757.jpg';
+export const APP_LOGO_SRC = appLogo;
+export const CLAUDE_LOGO_SRC = claudeLogo;
+export const CHATGPT_LOGO_SRC = chatgptLogo;
 
 interface BrandLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';

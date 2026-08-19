@@ -1,0 +1,6 @@
+{
+  "name": "AI Watermark Tools",
+  "description": "Free online AI text analysis, invisible character detector, text cleaner, and formatting artifact remover.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aiwatermarkremover.com/sitemap.xml
+Sitemap: https://aiwatermarktools.tech/sitemap.xml

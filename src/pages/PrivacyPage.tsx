@@ -8,10 +8,7 @@ import { SEOHead } from '../components/seo/SEOHead';
 export function PrivacyPage() {
   return (
     <div className="flex-1 w-full py-10 md:py-16">
-      <SEOHead
-        title="Privacy Policy – AI Watermark Tools"
-        description="Our privacy policy details how AI Watermark Tools handles client-side data processing and advertising cookies."
-      />
+      <SEOHead />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-10">
         
         {/* Header */}

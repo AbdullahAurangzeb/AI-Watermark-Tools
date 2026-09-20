@@ -23,10 +23,7 @@ export function ContactPage() {
 
   return (
     <div className="flex-1 w-full py-10 md:py-16">
-      <SEOHead
-        title="Contact Us – AI Watermark Tools"
-        description="Get in touch with the AI Watermark Tools team for feedback, feature requests, or inquiries."
-      />
+      <SEOHead />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-10">
         
         {/* Header */}

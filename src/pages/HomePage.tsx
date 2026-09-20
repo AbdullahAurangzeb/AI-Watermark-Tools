@@ -7,6 +7,7 @@ import { AdPlaceholder } from '../components/ads/AdPlaceholder';
 import { TextTool } from '../components/tools/TextTool';
 import { SEOHead } from '../components/seo/SEOHead';
 import { BLOG_POSTS } from '../data/blogData';
+import { HOME_FAQS } from '../data/homeFaqs';
 import { BrandLogo, ProviderLogo } from '../components/ui/BrandLogo';
 import { 
   Sparkles, 
@@ -35,35 +36,9 @@ export function HomePage() {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
-  const homeFaqs = [
-    {
-      question: 'What is an AI text watermark remover and cleaner?',
-      answer: 'An AI text watermark remover is a utility designed to inspect, detect, and remove invisible Unicode characters, formatting artifacts, non-standard whitespace, and copy-paste remnants introduced when copying text from AI assistants like ChatGPT, Claude, and Gemini.',
-    },
-    {
-      question: 'How do invisible characters get into AI text?',
-      answer: 'Web interfaces and dynamic Markdown editors frequently insert zero-width spaces (U+200B), non-breaking spaces (U+00A0), and directional markers for cursor tracking and typography. When copied to the clipboard, these invisible characters remain inside your text.',
-    },
-    {
-      question: 'Can this tool guarantee bypassing AI detectors?',
-      answer: 'No. We pride ourselves on complete technical honesty. While our tool cleans all invisible characters and normalizes formatting, statistical AI detectors evaluate probabilistic token choices and sentence complexity rather than just hidden glyphs. We do not make false claims of 100% detector bypass.',
-    },
-    {
-      question: 'Is text processing private and secure?',
-      answer: 'Yes! All analysis and deterministic cleaning take place 100% locally in your browser environment. Your text is never stored in a database or permanently logged on our servers.',
-    },
-    {
-      question: 'Is AI Watermark Tools free to use?',
-      answer: 'Yes, all tools on our platform are 100% free with no sign-up, no subscriptions, and no credit caps.',
-    },
-  ];
-
   return (
     <div className="flex-1 w-full py-8 md:py-12">
-      <SEOHead
-        title="AI Watermark Tools – Free AI Text Watermark Remover & Cleaner"
-        description="Free online AI text watermark remover and cleaner. Detect invisible Unicode characters, formatting artifacts, zero-width spaces, and clean AI-generated text locally in browser."
-      />
+      <SEOHead />
       
       {/* Hero Section */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-5 mb-10">
@@ -117,7 +92,9 @@ export function HomePage() {
 
               <div className="space-y-2">
                 <h2 className="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors">
-                  Claude AI Text Watermark Remover
+                  <Link to="/claude-ai-text-watermark-remover">
+                    Claude AI Text Watermark Remover
+                  </Link>
                 </h2>
                 <p className="text-sm text-slate-600 leading-relaxed">
                   Analyze and clean Claude-generated text for invisible characters, formatting artifacts, unusual whitespace, and other detectable text artifacts.
@@ -162,7 +139,9 @@ export function HomePage() {
 
               <div className="space-y-2">
                 <h2 className="text-xl font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">
-                  ChatGPT AI Text Watermark Remover
+                  <Link to="/chatgpt-ai-text-watermark-remover">
+                    ChatGPT AI Text Watermark Remover
+                  </Link>
                 </h2>
                 <p className="text-sm text-slate-600 leading-relaxed">
                   Analyze and clean ChatGPT-generated text for invisible characters, formatting artifacts, unusual whitespace, and other detectable text artifacts.
@@ -440,7 +419,7 @@ export function HomePage() {
           </div>
 
           <div className="space-y-3">
-            {homeFaqs.map((faq, index) => {
+            {HOME_FAQS.map((faq, index) => {
               const isOpen = openFaqIndex === index;
               return (
                 <div

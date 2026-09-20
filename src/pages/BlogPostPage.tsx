@@ -16,6 +16,7 @@ export function BlogPostPage() {
   if (!post) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center py-20 px-4 text-center">
+        <SEOHead />
         <h1 className="text-2xl font-bold text-slate-900 mb-2">Article Not Found</h1>
         <p className="text-slate-500 mb-6">The article you are looking for does not exist or has been relocated.</p>
         <Link
@@ -31,26 +32,9 @@ export function BlogPostPage() {
 
   const otherPosts = BLOG_POSTS.filter((p) => p.slug !== slug).slice(0, 2);
 
-  const articleSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: post.title,
-    description: post.description,
-    author: {
-      '@type': 'Person',
-      name: post.author,
-    },
-    datePublished: post.publishedDate,
-    category: post.category,
-  };
-
   return (
     <div className="flex-1 w-full py-10 md:py-16">
-      <SEOHead
-        title={`${post.title} – AI Watermark Tools`}
-        description={post.description}
-        schema={articleSchema}
-      />
+      <SEOHead />
       <article className="max-w-4xl mx-auto px-4 sm:px-6 space-y-8">
         
         {/* Breadcrumb & Navigation */}

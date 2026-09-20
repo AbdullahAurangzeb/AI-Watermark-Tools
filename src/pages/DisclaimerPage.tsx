@@ -8,10 +8,7 @@ import { SEOHead } from '../components/seo/SEOHead';
 export function DisclaimerPage() {
   return (
     <div className="flex-1 w-full py-10 md:py-16">
-      <SEOHead
-        title="Technical & AI Disclaimer – AI Watermark Tools"
-        description="Transparent explanation of deterministic text cleaning vs. probabilistic AI detection capabilities and limitations."
-      />
+      <SEOHead />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-10">
         
         {/* Header */}

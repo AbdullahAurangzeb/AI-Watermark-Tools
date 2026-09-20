@@ -20,8 +20,8 @@ import { DisclaimerPage } from './pages/DisclaimerPage';
 import { BlogIndexPage } from './pages/BlogIndexPage';
 import { BlogPostPage } from './pages/BlogPostPage';
 import { Button } from './components/ui/Button';
-import { Link } from './router/RouterContext';
-import { ArrowLeft, Home } from 'lucide-react';
+import { SEOHead } from './components/seo/SEOHead';
+import { Home } from 'lucide-react';
 
 function PageRouter() {
   const { currentPath } = useRouter();
@@ -69,6 +69,7 @@ function PageRouter() {
   // 404 Fallback
   return (
     <div className="flex-1 flex flex-col items-center justify-center py-20 px-4 text-center">
+      <SEOHead />
       <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 font-extrabold text-2xl mb-4">
         404
       </div>

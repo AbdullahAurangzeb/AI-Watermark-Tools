@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import dotenv from 'dotenv';
+import { buildRobotsTxt, buildSitemapXml, getPublicSiteUrl } from './src/seo/site';
 
 dotenv.config();
 
@@ -61,129 +62,12 @@ app.post('/api/rewrite', async (_req: Request, res: Response) => {
 // ----------------------------------------------------
 
 app.get('/sitemap.xml', (_req: Request, res: Response) => {
-  const host =
-    process.env.APP_URL || 'https://www.aiwatermarktools.tech';
-
+  const host = getPublicSiteUrl(process.env.APP_URL);
   const today = new Date().toISOString().split('T')[0];
-
-  const routes = [
-    {
-      path: '/',
-      priority: '1.0',
-      changefreq: 'weekly',
-    },
-
-    // Main AI Text Tools
-    {
-      path: '/claude-ai-text-watermark-remover',
-      priority: '0.9',
-      changefreq: 'weekly',
-    },
-    {
-      path: '/chatgpt-ai-text-watermark-remover',
-      priority: '0.9',
-      changefreq: 'weekly',
-    },
-    {
-      path: '/ai-text-watermark-remover',
-      priority: '0.8',
-      changefreq: 'weekly',
-    },
-    {
-      path: '/ai-text-cleaner',
-      priority: '0.8',
-      changefreq: 'weekly',
-    },
-    {
-      path: '/invisible-character-remover',
-      priority: '0.8',
-      changefreq: 'weekly',
-    },
-
-    // Important Website Pages
-    {
-      path: '/about',
-      priority: '0.5',
-      changefreq: 'monthly',
-    },
-    {
-      path: '/contact',
-      priority: '0.5',
-      changefreq: 'monthly',
-    },
-    {
-      path: '/privacy',
-      priority: '0.5',
-      changefreq: 'monthly',
-    },
-    {
-      path: '/terms',
-      priority: '0.5',
-      changefreq: 'monthly',
-    },
-    {
-      path: '/disclaimer',
-      priority: '0.5',
-      changefreq: 'monthly',
-    },
-
-    // Blog
-    {
-      path: '/blog',
-      priority: '0.8',
-      changefreq: 'weekly',
-    },
-
-    // Blog Posts
-    {
-      path: '/blog/does-chatgpt-watermark-text',
-      priority: '0.7',
-      changefreq: 'monthly',
-    },
-    {
-      path: '/blog/does-claude-watermark-text',
-      priority: '0.7',
-      changefreq: 'monthly',
-    },
-    {
-      path: '/blog/what-are-invisible-unicode-characters',
-      priority: '0.7',
-      changefreq: 'monthly',
-    },
-    {
-      path: '/blog/ai-text-formatting-artifacts-explained',
-      priority: '0.7',
-      changefreq: 'monthly',
-    },
-    {
-      path: '/blog/unicode-normalization-forms-nfc-nfd-explained',
-      priority: '0.7',
-      changefreq: 'monthly',
-    },
-    {
-      path: '/blog/complete-guide-to-safe-ai-text-editing',
-      priority: '0.7',
-      changefreq: 'monthly',
-    },
-  ];
-
-  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes
-  .map(
-    (route) => `  <url>
-    <loc>${host}${route.path === '/' ? '/' : route.path}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>${route.changefreq}</changefreq>
-    <priority>${route.priority}</priority>
-  </url>`
-  )
-  .join('\n')}
-</urlset>`;
 
   res.status(200);
   res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-  res.send(sitemapXml);
+  res.send(buildSitemapXml(host, today));
 });
 
 // ----------------------------------------------------
@@ -191,19 +75,11 @@ ${routes
 // ----------------------------------------------------
 
 app.get('/robots.txt', (_req: Request, res: Response) => {
-  const host =
-    process.env.APP_URL || 'https://www.aiwatermarktools.tech';
-
-  const robotsTxt = `User-agent: *
-Allow: /
-Disallow: /api/
-
-Sitemap: ${host}/sitemap.xml
-`;
+  const host = getPublicSiteUrl(process.env.APP_URL);
 
   res.status(200);
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.send(robotsTxt);
+  res.send(buildRobotsTxt(host));
 });
 
 // ----------------------------------------------------

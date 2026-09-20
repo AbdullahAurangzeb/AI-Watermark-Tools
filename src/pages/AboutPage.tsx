@@ -10,10 +10,7 @@ import { BrandLogo } from '../components/ui/BrandLogo';
 export function AboutPage() {
   return (
     <div className="flex-1 w-full py-10 md:py-16">
-      <SEOHead
-        title="About AI Watermark Tools – Transparent AI Text Engineering"
-        description="Learn about AI Watermark Tools, our privacy-first client-side architecture, and our commitment to honest, technical text hygiene."
-      />
+      <SEOHead />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-12">
         
         {/* Header */}

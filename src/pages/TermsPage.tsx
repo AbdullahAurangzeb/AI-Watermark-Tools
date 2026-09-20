@@ -7,10 +7,7 @@ import { SEOHead } from '../components/seo/SEOHead';
 export function TermsPage() {
   return (
     <div className="flex-1 w-full py-10 md:py-16">
-      <SEOHead
-        title="Terms of Service – AI Watermark Tools"
-        description="Terms of service and user agreement for utilizing AI Watermark Tools utilities."
-      />
+      <SEOHead />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-10">
         
         {/* Header */}

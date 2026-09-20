@@ -24,17 +24,14 @@ export function BlogIndexPage() {
 
   return (
     <div className="flex-1 w-full py-10 md:py-16">
-      <SEOHead
-        title="AI Text Analysis & Watermarking Blog – AI Watermark Tools"
-        description="In-depth engineering guides, Unicode character breakdowns, zero-width space analysis, and technical explanations of AI text artifacts."
-      />
+      <SEOHead />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-10">
         
         {/* Header */}
         <div className="space-y-4 text-center">
           <Badge variant="purple" size="md">Knowledge Base & Research</Badge>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
-            AI Text Watermarking & Analysis Blog
+            AI Text & Unicode Guides
           </h1>
           <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
             In-depth engineering guides, Unicode character breakdowns, and technical explanations of AI text artifacts.

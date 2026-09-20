@@ -46,26 +46,9 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
     }
   };
 
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: config.faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  };
-
   return (
     <div className="flex-1 w-full py-8 md:py-12">
-      <SEOHead
-        title={config.pageTitle}
-        description={config.metaDescription}
-        schema={faqSchema}
-      />
+      <SEOHead />
       
       {/* Hero Header Section */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-4 mb-8">
@@ -306,7 +289,7 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
           <h2 className="text-lg font-bold text-slate-900">
             Explore Related AI Text Tools
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
               to="/claude-ai-text-watermark-remover"
               className="p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-xs transition-all group"
@@ -327,6 +310,17 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
                 <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-transform group-hover:translate-x-0.5" />
               </h3>
               <p className="text-xs text-slate-500 mt-1">Clean ChatGPT text artifacts</p>
+            </Link>
+
+            <Link
+              to="/ai-text-cleaner"
+              className="p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-xs transition-all group"
+            >
+              <h3 className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600 flex items-center justify-between">
+                <span>AI Text Cleaner</span>
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-transform group-hover:translate-x-0.5" />
+              </h3>
+              <p className="text-xs text-slate-500 mt-1">Normalize formatting artifacts</p>
             </Link>
 
             <Link

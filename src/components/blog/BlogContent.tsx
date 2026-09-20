@@ -63,6 +63,7 @@ export function BlogContent({ content }: { content: string }) {
   const lines = content.trim().split('\n');
   const blocks: ReactNode[] = [];
   let listItems: string[] = [];
+  let tableRows: string[] = [];
   let key = 0;
 
   const flushList = () => {
@@ -77,17 +78,63 @@ export function BlogContent({ content }: { content: string }) {
     listItems = [];
   };
 
+  const flushTable = () => {
+    if (tableRows.length === 0) return;
+    const parsed = tableRows
+      .map((row) =>
+        row
+          .split('|')
+          .slice(1, -1)
+          .map((cell) => cell.trim())
+      )
+      .filter((cells) => cells.length > 0 && !cells.every((cell) => /^[-:]+$/.test(cell)));
+
+    if (parsed.length > 0) {
+      const header = parsed[0];
+      const body = parsed.slice(1);
+      blocks.push(
+        <div key={`table-${key++}`} className="overflow-x-auto">
+          <table className="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr>
+                {header.map((cell, i) => (
+                  <th key={i} className="border border-slate-200 bg-slate-50 px-3 py-2 font-semibold text-slate-900">
+                    {renderInline(cell)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {body.map((row, i) => (
+                <tr key={i}>
+                  {row.map((cell, j) => (
+                    <td key={`${i}-${j}`} className="border border-slate-200 px-3 py-2 text-slate-700">
+                      {renderInline(cell)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+    tableRows = [];
+  };
+
   for (const rawLine of lines) {
     const line = rawLine.trimEnd();
     const trimmed = line.trim();
 
     if (!trimmed) {
       flushList();
+      flushTable();
       continue;
     }
 
     if (trimmed.startsWith('### ')) {
       flushList();
+      flushTable();
       blocks.push(
         <h3 key={`h3-${key++}`} className="text-lg font-bold text-slate-900 pt-2">
           {renderInline(trimmed.slice(4))}
@@ -98,6 +145,7 @@ export function BlogContent({ content }: { content: string }) {
 
     if (trimmed.startsWith('## ')) {
       flushList();
+      flushTable();
       blocks.push(
         <h2 key={`h2-${key++}`} className="text-2xl font-bold text-slate-900 pt-4">
           {renderInline(trimmed.slice(3))}
@@ -106,18 +154,27 @@ export function BlogContent({ content }: { content: string }) {
       continue;
     }
 
+    if (trimmed.startsWith('|')) {
+      flushList();
+      tableRows.push(trimmed);
+      continue;
+    }
+
     if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
+      flushTable();
       listItems.push(trimmed.slice(2));
       continue;
     }
 
     const numbered = trimmed.match(/^\d+\.\s+(.*)$/);
     if (numbered) {
+      flushTable();
       listItems.push(numbered[1]);
       continue;
     }
 
     flushList();
+    flushTable();
     blocks.push(
       <p key={`p-${key++}`} className="text-slate-700 leading-relaxed">
         {renderInline(trimmed)}
@@ -126,6 +183,7 @@ export function BlogContent({ content }: { content: string }) {
   }
 
   flushList();
+  flushTable();
 
   return <Fragment>{blocks}</Fragment>;
 }

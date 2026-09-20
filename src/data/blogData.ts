@@ -1,6 +1,8 @@
 import { BlogPost } from '../types';
+import { WEEK3_BLOG_POSTS } from './week3BlogPosts';
 
 export const BLOG_POSTS: BlogPost[] = [
+  ...WEEK3_BLOG_POSTS,
   {
     slug: 'does-chatgpt-watermark-text',
     title: 'Does ChatGPT Watermark Text? The Truth About AI Text Watermarking',
@@ -26,6 +28,10 @@ export const BLOG_POSTS: BlogPost[] = [
         title: 'AI text cleaner',
         description: 'Normalize whitespace and clean AI-generated text',
       },
+    ],
+    relatedArticles: [
+      { slug: 'how-to-clean-chatgpt-text', title: 'How to clean ChatGPT text' },
+      { slug: 'how-to-detect-hidden-unicode-characters', title: 'How to detect hidden Unicode characters' },
     ],
     faqs: [
       {
@@ -87,6 +93,8 @@ These issues are why people look for a ChatGPT text cleaner. They can break sear
 4. If you only care about hidden code points, use the [invisible character remover](/invisible-character-remover).
 5. For general formatting cleanup, use the [AI text cleaner](/ai-text-cleaner).
 
+For a step-by-step cleaning walkthrough, see [how to clean ChatGPT text](/blog/how-to-clean-chatgpt-text).
+
 None of these steps is a detector bypass. They are text hygiene.
 
 ## Bottom line
@@ -115,6 +123,10 @@ Treat “ChatGPT watermark” as a bundle of claims, not a single proven charact
         description: 'Scan zero-width spaces and other hidden code points',
       },
     ],
+    relatedArticles: [
+      { slug: 'how-to-clean-ai-generated-text', title: 'How to clean AI-generated text without changing meaning' },
+      { slug: 'what-are-invisible-unicode-characters', title: 'What are invisible Unicode characters?' },
+    ],
     content: `
 ## Understanding Claude Text Generation & Artifacts
 
@@ -133,6 +145,8 @@ When copying from Claude’s web or desktop apps, the usual issues are:
 ### How to inspect Claude text
 
 Use the [Claude AI text cleaner](/claude-ai-text-watermark-remover) to inspect a paste, or the [invisible character remover](/invisible-character-remover) if you only want a hidden-character scan. Cleaning copy-paste artifacts is not the same as proving or removing a statistical watermark.
+
+Meaning-preserving cleanup for any assistant draft is covered in [how to clean AI-generated text without changing its meaning](/blog/how-to-clean-ai-generated-text).
     `,
   },
   {
@@ -150,6 +164,11 @@ Use the [Claude AI text cleaner](/claude-ai-text-watermark-remover) to inspect a
         title: 'Invisible character remover',
         description: 'Scan and remove hidden Unicode characters and zero-width spaces',
       },
+    ],
+    relatedArticles: [
+      { slug: 'how-to-remove-invisible-characters', title: 'How to remove invisible characters from text' },
+      { slug: 'zero-width-space-u200b-explained', title: 'Zero Width Space (U+200B) explained' },
+      { slug: 'how-to-detect-hidden-unicode-characters', title: 'How to detect hidden Unicode characters' },
     ],
     content: `
 ## What Are Invisible Unicode Characters?
@@ -176,13 +195,16 @@ Invisible characters can:
 * Indicate automated text scrapers or unvetted copy-pasting
 
 To inspect a string, use the [invisible character remover](/invisible-character-remover). For broader AI-generated drafts, the [AI text cleaner](/ai-text-cleaner) also normalizes unusual whitespace.
+
+This page is a catalog of **what** those characters are. For workflows, see [how to detect hidden Unicode characters](/blog/how-to-detect-hidden-unicode-characters), [how to remove invisible characters](/blog/how-to-remove-invisible-characters), and the dedicated [U+200B (zero-width space) guide](/blog/zero-width-space-u200b-explained).
     `,
   },
   {
     slug: 'ai-text-formatting-artifacts-explained',
     title: 'AI Text Formatting Artifacts Explained: Why AI Text Looks and Feels Distinct',
-    description: 'Understanding repetitive sentence structures, markdown anomalies, whitespace patterns, and how deterministic cleaning helps.',
-    readTime: '6 min read',
+    description:
+      'Learn what AI text formatting artifacts are — unusual whitespace, markdown leftovers, hidden characters — how they differ from writing style and watermarks, and how to clean them.',
+    readTime: '9 min read',
     publishedDate: '2026-02-15',
     author: 'Content Strategy Desk',
     category: 'Content Quality',
@@ -193,27 +215,137 @@ To inspect a string, use the [invisible character remover](/invisible-character-
         title: 'AI text cleaner',
         description: 'Clean formatting artifacts and unusual whitespace in AI-generated text',
       },
+      {
+        to: '/invisible-character-remover',
+        title: 'Invisible Character Remover',
+        description: 'Scan hidden Unicode characters separately from layout leftovers',
+      },
+      {
+        to: '/chatgpt-ai-text-watermark-remover',
+        title: 'ChatGPT text cleaner',
+        description: 'Inspect formatting leftovers in copied ChatGPT replies',
+      },
+    ],
+    relatedArticles: [
+      { slug: 'how-to-clean-ai-generated-text', title: 'How to clean AI-generated text without changing meaning' },
+      { slug: 'how-to-clean-chatgpt-text', title: 'How to clean ChatGPT text' },
+      { slug: 'what-are-invisible-unicode-characters', title: 'What are invisible Unicode characters?' },
+    ],
+    faqs: [
+      {
+        question: 'What is an AI text formatting artifact?',
+        answer:
+          'It is leftover structure from how the text was rendered or copied: unusual spaces, markdown fences, soft hyphens, trailing whitespace, or hidden format characters. It is not the same as a writing-style habit, and it is not automatically a watermark.',
+      },
+      {
+        question: 'Can cleaning remove formatting artifacts without rewriting?',
+        answer:
+          'Yes. Deterministic cleaning targets cataloged characters and irregular whitespace. It does not paraphrase sentences. Style habits such as repeated transition words are editorial, not something a character cleaner deletes.',
+      },
+      {
+        question: 'Are formatting artifacts the same as invisible Unicode characters?',
+        answer:
+          'They overlap but are not identical. Invisible characters are specific code points. Formatting artifacts also include visible leftovers such as extra spaces and markdown markers. Treat each category separately.',
+      },
     ],
     content: `
-## What Are AI Text Formatting Artifacts?
+## Direct answer
 
-When LLMs generate responses, they follow statistical distribution patterns. These manifest not only in vocabulary choice, but also in structural and formatting artifacts.
+**AI text formatting artifacts** are leftovers in the string after you copy from a chat UI or markdown renderer: unusual whitespace, trailing spaces, soft hyphens, stray backticks, and sometimes invisible Unicode characters.
 
-### Common Formatting Markers
+They are **not** the same as:
 
-* **Uniform Paragraph Lengths:** LLMs tend to generate paragraphs of roughly 3 to 4 sentences with consistent word density.
-* **Over-reliance on Bulleted Summaries:** High frequency of bold-titled bullet lists.
-* **Repeated Transitional Adverbs:** "Furthermore," "Moreover," "In summary," "Additionally."
-* **Superfluous Whitespace & Soft Hyphens:** Invisible hyphens or trailing spaces left behind by markdown renderers.
+* a statistical AI watermark (a possible pattern in word choice)
+* a writing-style habit (even paragraph lengths, favorite transition words)
+* proof that every AI sentence contains hidden tracking data
 
-### Clean and Normalization Strategy
+Cleaning artifacts is text hygiene. Use the [AI Text Cleaner](/ai-text-cleaner) to inspect and normalize cataloged leftovers without rewriting the sentences.
 
-To improve text hygiene:
-1. Remove all hidden control codes and non-standard whitespace.
-2. Normalize quotes, dashes, and bullet marks.
-3. Review and vary sentence pacing and paragraph lengths naturally.
+## Three things people mix together
 
-Hidden-character cleanup is a first step, not a style rewrite. Try the [AI text cleaner](/ai-text-cleaner) before you edit for voice.
+It helps to keep these apart.
+
+**1. Formatting artifacts** — extra or unusual characters created by layout: non-breaking spaces from HTML, extra blank padding, markdown fence markers, soft hyphens.
+
+**2. Invisible Unicode characters** — code points such as U+200B that have no glyph. Covered in [what are invisible Unicode characters?](/blog/what-are-invisible-unicode-characters).
+
+**3. Style patterns** — tendencies in how a model writes: similar paragraph length, frequent bullet lists, words like “Furthermore.” Those are visible language. A character cleaner will not (and should not) delete them.
+
+Some people use “AI watermark” as a catch-all. Formatting artifacts and hidden characters can exist in a paste. They are still not necessarily a formal watermark.
+
+## Common formatting artifacts in copied AI text
+
+### Unusual whitespace
+
+HTML and markdown often insert **non-breaking spaces (U+00A0)** around lists or inline code. You see a gap, but search and wrapping may disagree with a normal space.
+
+Copied answers can also contain:
+
+* three or more ordinary spaces in a row
+* spaces at the ends of lines
+* typographic thin or hair spaces (U+2009, U+200A)
+
+### Markdown remnants
+
+Chat UIs render markdown. A copy can still include:
+
+* leftover backticks around a phrase
+* unmatched markdown code fences
+* list markers that no longer match the surrounding document
+* indentation that belonged to a code block
+
+These are document leftovers. They change how an editor displays the text. They do not encode a secret statistical mark.
+
+### Soft hyphens and wrap hints
+
+A **soft hyphen (U+00AD)** is a hyphenation opportunity. It may be invisible until a line wraps. Zero-width spaces can play a similar wrap role; see [U+200B explained](/blog/zero-width-space-u200b-explained).
+
+### Hidden format characters
+
+Zero-width spaces, BOM markers, and related format characters sometimes ride along. They belong in the invisible-character category even when they arrived through the same copy action. Detect them with the [Invisible Character Remover](/invisible-character-remover).
+
+## Style patterns are not formatting artifacts
+
+These observations are about **how the prose is written**, not about extra code points:
+
+* paragraphs of similar length
+* frequent bold lead-ins on bullet lists
+* repeated transitions (“Moreover,” “In summary”)
+
+You can edit those by hand if you want a different voice. A Unicode cleaner should leave them alone. Treating style as if it were a removable watermark leads to tools that rewrite text while claiming they only “clean” it.
+
+## What cleaning can and cannot do
+
+**Cleaning can:**
+
+* convert non-breaking spaces to ordinary spaces
+* collapse runaway space runs
+* strip trailing spaces
+* remove cataloged invisible characters and soft hyphens
+* surface leftover markdown fences so you can delete them
+
+**Cleaning cannot:**
+
+* restyle the document into a new layout
+* guarantee that text will “look human”
+* remove a statistical watermark, if one were present
+* change AI-detector scores as a designed outcome
+
+For a workflow that keeps wording intact, see [how to clean AI-generated text without changing its meaning](/blog/how-to-clean-ai-generated-text). ChatGPT-specific copy steps are in [how to clean ChatGPT text](/blog/how-to-clean-chatgpt-text).
+
+## How to inspect and clean formatting artifacts
+
+1. Paste the draft into the [AI Text Cleaner](/ai-text-cleaner).
+2. Read whether the report lists whitespace issues, invisible characters, or other cataloged artifacts.
+3. Clean, then skim: words and numbers should match the original.
+4. If the report is mostly hidden code points, also use the [Invisible Character Remover](/invisible-character-remover).
+5. If the source is a ChatGPT tab, the [ChatGPT text cleaner](/chatgpt-ai-text-watermark-remover) explains that UI.
+
+After hygiene, any style edit is ordinary writing work — not a hidden-character problem.
+
+## Bottom line
+
+Formatting artifacts are copy-paste and renderer leftovers. Invisible Unicode characters are specific code points. Writing-style habits are something else. Keep those categories separate, clean only the leftovers, and do not treat cleanup as watermark removal or detector evasion.
     `,
   },
   {
@@ -232,6 +364,10 @@ Hidden-character cleanup is a first step, not a style rewrite. Try the [AI text 
         description: 'Inspect hidden Unicode characters before you normalize text',
       },
     ],
+    relatedArticles: [
+      { slug: 'how-to-detect-hidden-unicode-characters', title: 'How to detect hidden Unicode characters' },
+      { slug: 'what-are-invisible-unicode-characters', title: 'What are invisible Unicode characters?' },
+    ],
     content: `
 ## The Challenge of Unicode Equivalence
 
@@ -248,6 +384,8 @@ When text is generated by language models and rendered across different operatin
 ### Best Practices for Web & Document Publishing
 
 Standardizing all incoming text to **Unicode Normalization Form C (NFC)** ensures uniform byte representation across all modern operating systems, search engines, and relational databases.
+
+Normalization is a different problem from extra hidden characters. If the paste contains zero-width spaces or a BOM, inspect it with the [Invisible Character Remover](/invisible-character-remover) first, or follow [how to detect hidden Unicode characters](/blog/how-to-detect-hidden-unicode-characters).
     `,
   },
   {
@@ -271,6 +409,10 @@ Standardizing all incoming text to **Unicode Normalization Form C (NFC)** ensure
         description: 'Inspect detectable artifacts in copied AI-generated text',
       },
     ],
+    relatedArticles: [
+      { slug: 'how-to-clean-ai-generated-text', title: 'How to clean AI-generated text without changing meaning' },
+      { slug: 'ai-text-formatting-artifacts-explained', title: 'AI text formatting artifacts explained' },
+    ],
     content: `
 ## Distinguishing Formatting Hygiene from Dishonest Evasion
 
@@ -287,6 +429,8 @@ As AI writing assistants become standard tools in modern editorial pipelines, ma
 Unethical services often promise to make AI text "100% undetectable" through intentional synonym swapping, phonetic misspellings, or invisible character obfuscation. These techniques produce degraded, awkward prose and fail against modern multi-layered statistical detectors.
 
 Transparent text engineering focuses on **readability, precision, and verified human editorial oversight**.
+
+For the practical, meaning-preserving cleanup steps, see [how to clean AI-generated text without changing its meaning](/blog/how-to-clean-ai-generated-text). Formatting leftovers are cataloged in [AI text formatting artifacts explained](/blog/ai-text-formatting-artifacts-explained).
     `,
   },
 ];

@@ -33,7 +33,14 @@ export function BlogPostPage() {
     );
   }
 
-  const otherPosts = BLOG_POSTS.filter((p) => p.slug !== slug).slice(0, 2);
+  const relatedFromField = (post.relatedArticles ?? [])
+    .map((item) => BLOG_POSTS.find((candidate) => candidate.slug === item.slug))
+    .filter((candidate): candidate is NonNullable<typeof candidate> => Boolean(candidate));
+
+  const otherPosts =
+    relatedFromField.length > 0
+      ? relatedFromField.slice(0, 3)
+      : BLOG_POSTS.filter((p) => p.slug !== slug).slice(0, 2);
 
   return (
     <div className="flex-1 w-full py-10 md:py-16">

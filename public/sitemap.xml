@@ -114,4 +114,34 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://www.aiwatermarktools.tech/blog/how-to-clean-chatgpt-text</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.aiwatermarktools.tech/blog/how-to-remove-invisible-characters</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.aiwatermarktools.tech/blog/zero-width-space-u200b-explained</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.aiwatermarktools.tech/blog/how-to-detect-hidden-unicode-characters</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.aiwatermarktools.tech/blog/how-to-clean-ai-generated-text</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

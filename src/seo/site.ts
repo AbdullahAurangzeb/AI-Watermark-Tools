@@ -1,3 +1,5 @@
+import { BLOG_POSTS } from '../data/blogData';
+
 export const SITE_NAME = 'AI Watermark Tools';
 export const SITE_URL = 'https://www.aiwatermarktools.tech';
 export const SITE_TWITTER_CARD = 'summary_large_image';
@@ -28,8 +30,9 @@ export interface SitemapEntry {
 /**
  * Canonical public routes for sitemap generation.
  * Paths must match production URLs (www + https, no trailing slash except home).
+ * Blog URLs are derived from BLOG_POSTS so new articles are not omitted.
  */
-export const SITEMAP_ENTRIES: SitemapEntry[] = [
+const CORE_SITEMAP_ENTRIES: SitemapEntry[] = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
   { path: '/claude-ai-text-watermark-remover', priority: '0.9', changefreq: 'weekly' },
   { path: '/chatgpt-ai-text-watermark-remover', priority: '0.9', changefreq: 'weekly' },
@@ -42,12 +45,15 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { path: '/terms', priority: '0.5', changefreq: 'monthly' },
   { path: '/disclaimer', priority: '0.5', changefreq: 'monthly' },
   { path: '/blog', priority: '0.8', changefreq: 'weekly' },
-  { path: '/blog/does-chatgpt-watermark-text', priority: '0.7', changefreq: 'monthly' },
-  { path: '/blog/does-claude-watermark-text', priority: '0.7', changefreq: 'monthly' },
-  { path: '/blog/what-are-invisible-unicode-characters', priority: '0.7', changefreq: 'monthly' },
-  { path: '/blog/ai-text-formatting-artifacts-explained', priority: '0.7', changefreq: 'monthly' },
-  { path: '/blog/unicode-normalization-forms-nfc-nfd-explained', priority: '0.7', changefreq: 'monthly' },
-  { path: '/blog/complete-guide-to-safe-ai-text-editing', priority: '0.7', changefreq: 'monthly' },
+];
+
+export const SITEMAP_ENTRIES: SitemapEntry[] = [
+  ...CORE_SITEMAP_ENTRIES,
+  ...BLOG_POSTS.map((post): SitemapEntry => ({
+    path: `/blog/${post.slug}`,
+    priority: '0.7',
+    changefreq: 'monthly',
+  })),
 ];
 
 export function normalizeSeoPath(pathname: string): string {

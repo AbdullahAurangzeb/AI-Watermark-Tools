@@ -161,6 +161,41 @@ const BLOG_SEO: Record<string, PageSeoConfig> = {
     ogType: 'article',
     breadcrumbName: 'Complete Guide to Safe AI Text Editing',
   },
+  'how-to-clean-chatgpt-text': {
+    title: 'How to Clean ChatGPT Text: Hidden Characters & Artifacts',
+    description:
+      'Learn how to clean copied ChatGPT text: inspect invisible Unicode characters, zero-width spaces, unusual whitespace, and formatting artifacts without rewriting the words.',
+    ogType: 'article',
+    breadcrumbName: 'How to Clean ChatGPT Text',
+  },
+  'how-to-remove-invisible-characters': {
+    title: 'How to Remove Invisible Characters From Text',
+    description:
+      'Learn what invisible Unicode characters are, why they appear in copied text, and how to detect and remove zero-width spaces, NBSP, and BOM without damaging useful text.',
+    ogType: 'article',
+    breadcrumbName: 'How to Remove Invisible Characters',
+  },
+  'zero-width-space-u200b-explained': {
+    title: 'Zero Width Space (U+200B): What It Is and How to Remove It',
+    description:
+      'What U+200B (ZERO WIDTH SPACE) is, why it is invisible, when it is useful, when copied text picks it up accidentally, and how to detect and remove it.',
+    ogType: 'article',
+    breadcrumbName: 'Zero Width Space (U+200B)',
+  },
+  'how-to-detect-hidden-unicode-characters': {
+    title: 'How to Detect Hidden Unicode Characters in Text',
+    description:
+      'How to inspect text for hidden Unicode characters, zero-width spaces, and unusual whitespace that copy and paste can preserve, with practical detection checks.',
+    ogType: 'article',
+    breadcrumbName: 'How to Detect Hidden Unicode Characters',
+  },
+  'how-to-clean-ai-generated-text': {
+    title: 'How to Clean AI-Generated Text Without Changing Meaning',
+    description:
+      'Clean AI-generated text without rewriting it: remove invisible characters, Unicode leftovers, and formatting artifacts while preserving the original wording.',
+    ogType: 'article',
+    breadcrumbName: 'How to Clean AI-Generated Text',
+  },
 };
 
 function organizationLd(): JsonLd {

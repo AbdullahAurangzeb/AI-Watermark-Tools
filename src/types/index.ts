@@ -73,6 +73,7 @@ export interface BlogPost {
   tags: string[];
   faqs?: FAQItem[];
   relatedTools?: InternalLinkItem[];
+  relatedArticles?: { slug: string; title: string }[];
 }
 
 export interface DetectedCharacter {

@@ -135,9 +135,9 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         description: 'What we can and cannot say about Claude text artifacts',
       },
       {
-        to: '/blog/what-are-invisible-unicode-characters',
-        title: 'Invisible Unicode characters',
-        description: 'Zero-width spaces, BOM, and hidden code points',
+        to: '/blog/how-to-clean-ai-generated-text',
+        title: 'Clean AI-generated text without changing meaning',
+        description: 'Hygiene versus rewriting for assistant drafts',
       },
     ],
     faqs: [
@@ -299,14 +299,14 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     ],
     relatedGuides: [
       {
+        to: '/blog/how-to-clean-chatgpt-text',
+        title: 'How to clean ChatGPT text',
+        description: 'Inspect hidden characters and formatting leftovers in copied replies',
+      },
+      {
         to: '/blog/does-chatgpt-watermark-text',
         title: 'Does ChatGPT watermark text?',
         description: 'Statistical watermarking vs. invisible Unicode artifacts',
-      },
-      {
-        to: '/blog/what-are-invisible-unicode-characters',
-        title: 'What are invisible Unicode characters?',
-        description: 'Zero-width spaces and other hidden code points',
       },
     ],
     faqs: [
@@ -460,9 +460,9 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     ],
     relatedGuides: [
       {
-        to: '/blog/does-chatgpt-watermark-text',
-        title: 'Does ChatGPT watermark text?',
-        description: 'How watermark claims differ from copy-paste artifacts',
+        to: '/blog/how-to-clean-ai-generated-text',
+        title: 'How to clean AI-generated text',
+        description: 'Remove artifacts without rewriting the sentences',
       },
       {
         to: '/blog/ai-text-formatting-artifacts-explained',
@@ -623,14 +623,14 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     ],
     relatedGuides: [
       {
+        to: '/blog/how-to-clean-ai-generated-text',
+        title: 'Clean AI text without changing meaning',
+        description: 'What a cleaner should preserve versus rewrite',
+      },
+      {
         to: '/blog/ai-text-formatting-artifacts-explained',
         title: 'AI text formatting artifacts explained',
         description: 'Why copied AI text can look and behave oddly',
-      },
-      {
-        to: '/blog/complete-guide-to-safe-ai-text-editing',
-        title: 'Safe AI text editing',
-        description: 'Clean formatting without misleading claims',
       },
     ],
     faqs: [
@@ -774,14 +774,14 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     ],
     relatedGuides: [
       {
-        to: '/blog/what-are-invisible-unicode-characters',
-        title: 'What are invisible Unicode characters?',
-        description: 'Code points, detection, and why they matter',
+        to: '/blog/how-to-remove-invisible-characters',
+        title: 'How to remove invisible characters',
+        description: 'Detect, then clean cataloged hidden Unicode code points',
       },
       {
-        to: '/blog/unicode-normalization-forms-nfc-nfd-explained',
-        title: 'Unicode normalization: NFC vs NFD',
-        description: 'Why identical-looking text can differ in bytes',
+        to: '/blog/zero-width-space-u200b-explained',
+        title: 'Zero Width Space (U+200B) explained',
+        description: 'What U+200B is, when it is useful, and how to remove it',
       },
     ],
     faqs: [

@@ -1,10 +1,8 @@
 import React from 'react';
-import appLogo from '@/src/assets/images/website_logo_1787080090142.jpg';
-import claudeLogo from '@/src/assets/images/claude_logo_1787079507325.jpg';
-import chatgptLogo from '@/src/assets/images/chatgpt_logo_1787079519757.jpg';
+import claudeLogo from '@/src/assets/images/claude_logo.jpg';
+import chatgptLogo from '@/src/assets/images/chatgpt_logo.jpg';
 
-// Generated asset paths
-export const APP_LOGO_SRC = appLogo;
+export const APP_LOGO_SRC = '/logo.jpg';
 export const CLAUDE_LOGO_SRC = claudeLogo;
 export const CHATGPT_LOGO_SRC = chatgptLogo;
 
@@ -38,7 +36,10 @@ export function BrandLogo({
       <div className={`${sizeClasses} overflow-hidden shadow-xs border border-indigo-100 bg-slate-900 shrink-0 flex items-center justify-center`}>
         <img
           src={APP_LOGO_SRC}
-          alt="AI Watermark Tools Logo"
+          alt="AI Watermark Tools logo"
+          width={64}
+          height={64}
+          decoding="async"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover"
         />
@@ -79,7 +80,10 @@ export function ProviderLogo({
       <div className={`${sizeClasses} overflow-hidden shadow-xs border border-amber-200/80 bg-amber-50 shrink-0 ${className}`}>
         <img
           src={CLAUDE_LOGO_SRC}
-          alt="Anthropic Claude AI Logo"
+          alt="Claude AI text cleaning tool icon"
+          width={56}
+          height={56}
+          decoding="async"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover"
         />
@@ -92,7 +96,10 @@ export function ProviderLogo({
       <div className={`${sizeClasses} overflow-hidden shadow-xs border border-emerald-200/80 bg-emerald-50 shrink-0 ${className}`}>
         <img
           src={CHATGPT_LOGO_SRC}
-          alt="OpenAI ChatGPT Logo"
+          alt="ChatGPT text cleaning tool icon"
+          width={56}
+          height={56}
+          decoding="async"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover"
         />
@@ -104,7 +111,10 @@ export function ProviderLogo({
     <div className={`${sizeClasses} overflow-hidden shadow-xs border border-indigo-200/80 bg-indigo-50 shrink-0 ${className}`}>
       <img
         src={APP_LOGO_SRC}
-        alt="AI Text Watermark Remover Logo"
+        alt="AI Watermark Tools logo"
+        width={56}
+        height={56}
+        decoding="async"
         referrerPolicy="no-referrer"
         className="w-full h-full object-cover"
       />

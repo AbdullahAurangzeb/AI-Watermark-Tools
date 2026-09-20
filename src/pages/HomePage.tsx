@@ -54,7 +54,7 @@ export function HomePage() {
         </h1>
 
         <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
-          Analyze, clean, and rewrite AI-generated text with free online text tools.
+          Free browser-based tools to inspect and clean AI-generated text. Remove invisible Unicode characters, zero-width spaces, unusual whitespace, and formatting artifacts from ChatGPT, Claude, and other copied text.
         </p>
 
         {/* Quick Highlights */}
@@ -176,6 +176,39 @@ export function HomePage() {
         </div>
       </div>
 
+      {/* Remaining major tools */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <Link
+            to="/ai-text-cleaner"
+            className="p-5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-md transition-all group"
+          >
+            <h2 className="text-base font-bold text-slate-900 group-hover:text-indigo-600">AI Text Cleaner</h2>
+            <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+              Clean AI-generated text by normalizing whitespace and removing hidden Unicode characters.
+            </p>
+          </Link>
+          <Link
+            to="/invisible-character-remover"
+            className="p-5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-md transition-all group"
+          >
+            <h2 className="text-base font-bold text-slate-900 group-hover:text-indigo-600">Invisible Character Remover</h2>
+            <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+              Find zero-width spaces and other hidden Unicode characters in copied text.
+            </p>
+          </Link>
+          <Link
+            to="/ai-text-watermark-remover"
+            className="p-5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-md transition-all group"
+          >
+            <h2 className="text-base font-bold text-slate-900 group-hover:text-indigo-600">AI Text Watermark Remover</h2>
+            <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+              Inspect detectable text artifacts that may appear in copied or AI-generated text.
+            </p>
+          </Link>
+        </div>
+      </div>
+
       {/* Model Mode Preset Selector on Homepage */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 mb-4">
         <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-white border border-slate-200">
@@ -257,6 +290,35 @@ export function HomePage() {
 
       {/* Comprehensive Explanatory Sections */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-16 mt-12">
+
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card variant="default" className="p-6 space-y-3">
+            <h2 className="text-xl font-bold text-slate-900">Who these tools are for</h2>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Writers, students, developers, and editors who copy text from ChatGPT, Claude, or other assistants and need the result to behave like ordinary plain text. If search, diffs, CMS fields, or code parsers act strangely after a paste, hidden characters or unusual whitespace are a common cause.
+            </p>
+          </Card>
+          <Card variant="default" className="p-6 space-y-3">
+            <h2 className="text-xl font-bold text-slate-900">What we can detect and clean</h2>
+            <ul className="text-sm text-slate-600 space-y-2">
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>Invisible Unicode characters and zero-width spaces</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>Non-breaking spaces and unusual whitespace</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>Formatting artifacts from chat UIs and markdown views</span>
+              </li>
+            </ul>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              We do not claim guaranteed AI-detector bypass or that every AI draft contains a removable watermark.
+            </p>
+          </Card>
+        </section>
         
         {/* Section: How It Works */}
         <section className="space-y-6">
@@ -464,7 +526,7 @@ export function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {BLOG_POSTS.slice(0, 2).map((post) => (
+            {BLOG_POSTS.slice(0, 4).map((post) => (
               <Card
                 key={post.slug}
                 variant="default"

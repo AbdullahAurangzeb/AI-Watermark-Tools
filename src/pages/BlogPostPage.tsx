@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter, Link } from '../router/RouterContext';
 import { BLOG_POSTS } from '../data/blogData';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { AdPlaceholder } from '../components/ads/AdPlaceholder';
 import { SEOHead } from '../components/seo/SEOHead';
-import { ArrowLeft, Clock, Calendar, User, Share2, Tag, ArrowRight } from 'lucide-react';
+import { Breadcrumbs } from '../components/seo/Breadcrumbs';
+import { BlogContent } from '../components/blog/BlogContent';
+import { ArrowLeft, Clock, Calendar, User, Tag, ArrowRight, ChevronDown } from 'lucide-react';
 
 export function BlogPostPage() {
   const { params } = useRouter();
   const slug = params.slug;
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const post = BLOG_POSTS.find((p) => p.slug === slug);
 
@@ -37,22 +40,15 @@ export function BlogPostPage() {
       <SEOHead />
       <article className="max-w-4xl mx-auto px-4 sm:px-6 space-y-8">
         
-        {/* Breadcrumb & Navigation */}
-        <div className="flex items-center justify-between">
-          <Link
-            to="/blog"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to all articles</span>
-          </Link>
-          <Badge variant="purple" size="sm">
-            {post.category}
-          </Badge>
-        </div>
+        <Breadcrumbs />
 
         {/* Post Header */}
         <header className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Badge variant="purple" size="sm">
+              {post.category}
+            </Badge>
+          </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             {post.title}
           </h1>
@@ -83,10 +79,8 @@ export function BlogPostPage() {
         <AdPlaceholder slot="in-content" />
 
         {/* Article Body Content */}
-        <div className="prose prose-slate max-w-none bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-xs leading-relaxed space-y-6 text-slate-800">
-          <div className="whitespace-pre-line text-base leading-relaxed">
-            {post.content.trim()}
-          </div>
+        <div className="prose prose-slate max-w-none bg-white p-6 sm:p-10 rounded-2xl border border-slate-200/80 shadow-xs space-y-5 text-slate-800">
+          <BlogContent content={post.content} />
         </div>
 
         {/* Tags */}
@@ -101,6 +95,55 @@ export function BlogPostPage() {
             </span>
           ))}
         </div>
+
+        {post.relatedTools && post.relatedTools.length > 0 && (
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-slate-900">Related tools</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {post.relatedTools.map((tool) => (
+                <Link
+                  key={tool.to}
+                  to={tool.to}
+                  className="p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 transition-all group"
+                >
+                  <h3 className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600">
+                    {tool.title}
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-1">{tool.description}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {post.faqs && post.faqs.length > 0 && (
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-slate-900">FAQ</h2>
+            <div className="space-y-3">
+              {post.faqs.map((faq, index) => {
+                const isOpen = openFaqIndex === index;
+                return (
+                  <div key={faq.question} className="rounded-xl border border-slate-200 bg-white overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                      className="w-full text-left p-4 flex items-center justify-between gap-4 font-semibold text-slate-900 hover:text-indigo-600"
+                      aria-expanded={isOpen}
+                    >
+                      <span className="text-sm sm:text-base">{faq.question}</span>
+                      <ChevronDown className={`w-5 h-5 text-slate-400 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {isOpen && (
+                      <div className="px-4 pb-4 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                        {faq.answer}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* Ad Placement 2: Bottom of Article */}
         <AdPlaceholder slot="in-content" />

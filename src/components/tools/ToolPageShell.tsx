@@ -3,6 +3,7 @@ import { ToolConfig } from '../../types';
 import { TextTool } from './TextTool';
 import { AdPlaceholder } from '../ads/AdPlaceholder';
 import { SEOHead } from '../seo/SEOHead';
+import { Breadcrumbs } from '../seo/Breadcrumbs';
 import { Badge } from '../ui/Badge';
 import { Card } from '../ui/Card';
 import { Link } from '../../router/RouterContext';
@@ -49,6 +50,10 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
   return (
     <div className="flex-1 w-full py-8 md:py-12">
       <SEOHead />
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <Breadcrumbs />
+      </div>
       
       {/* Hero Header Section */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-4 mb-8">
@@ -104,6 +109,33 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
 
       {/* Structured SEO & Explanatory Content Section */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-16 mt-12">
+
+        {config.explainerSections && config.explainerSections.length > 0 && (
+          <section className="space-y-8">
+            {config.explainerSections.map((section) => (
+              <div key={section.heading} className="space-y-3">
+                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+                  {section.heading}
+                </h2>
+                {section.paragraphs.map((paragraph) => (
+                  <p key={paragraph.slice(0, 48)} className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+                {section.bullets && section.bullets.length > 0 && (
+                  <ul className="space-y-2 text-sm text-slate-600 pt-1">
+                    {section.bullets.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </section>
+        )}
         
         {/* Section: Features & Capabilities */}
         <section className="space-y-6">
@@ -139,53 +171,40 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
         <section className="space-y-6">
           <div className="border-b border-slate-200 pb-3">
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-              How the {config.name} Works
+              How to use {config.name}
             </h2>
             <p className="text-sm text-slate-500 mt-1">
-              A 4-step transparent technical workflow.
+              A short, transparent workflow that runs in your browser.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-white border border-slate-200/80 space-y-2">
-              <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-sm flex items-center justify-center">
-                1
+            {(config.howToSteps ?? [
+              {
+                title: 'Paste Content',
+                description: 'Paste your AI-generated text or copy-paste snippet into the browser workspace.',
+              },
+              {
+                title: 'Deep Scan',
+                description: 'The scanner checks every Unicode codepoint for zero-width characters and abnormal whitespace.',
+              },
+              {
+                title: 'Deterministic Clean',
+                description: 'Unwanted artifacts are safely purged while keeping linguistic tokens and emojis untouched.',
+              },
+              {
+                title: 'Copy & Export',
+                description: 'Export your cleaned, normalized plain text with one-click copy or TXT file download.',
+              },
+            ]).map((step, index) => (
+              <div key={step.title} className="p-5 rounded-2xl bg-white border border-slate-200/80 space-y-2">
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-sm flex items-center justify-center">
+                  {index + 1}
+                </div>
+                <h3 className="font-semibold text-slate-900 text-sm">{step.title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">{step.description}</p>
               </div>
-              <h3 className="font-semibold text-slate-900 text-sm">Paste Content</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Paste your AI-generated text or copy-paste snippet into the browser workspace.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-white border border-slate-200/80 space-y-2">
-              <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-sm flex items-center justify-center">
-                2
-              </div>
-              <h3 className="font-semibold text-slate-900 text-sm">Deep Scan</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                The scanner checks every Unicode codepoint for zero-width characters and abnormal whitespace.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-white border border-slate-200/80 space-y-2">
-              <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-sm flex items-center justify-center">
-                3
-              </div>
-              <h3 className="font-semibold text-slate-900 text-sm">Deterministic Clean</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Unwanted artifacts are safely purged while keeping linguistic tokens and emojis untouched.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-white border border-slate-200/80 space-y-2">
-              <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-sm flex items-center justify-center">
-                4
-              </div>
-              <h3 className="font-semibold text-slate-900 text-sm">Copy & Export</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Export your cleaned, normalized plain text with one-click copy or TXT file download.
-              </p>
-            </div>
+            ))}
           </div>
         </section>
 
@@ -233,10 +252,14 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
           </div>
           <div className="space-y-2 text-sm leading-relaxed text-amber-900">
             <p>
-              <strong>What this tool does:</strong> Detects and removes invisible Unicode control characters, zero-width spaces, byte-order marks (BOM), non-breaking spaces (NBSP), and formatting artifacts introduced during generation and clipboard transfer.
+              <strong>What this tool does:</strong>{' '}
+              {config.limitations?.does ??
+                'Detects and removes invisible Unicode control characters, zero-width spaces, byte-order marks (BOM), non-breaking spaces (NBSP), and formatting artifacts introduced during generation and clipboard transfer.'}
             </p>
             <p>
-              <strong>What this tool does NOT do:</strong> We do NOT make false claims of "100% undetectable AI text" or guaranteed bypass of probabilistic AI classifiers. Probabilistic detectors analyze sentence structure, vocabulary distribution, and perplexity. Our tool delivers deterministic text hygiene and formatting artifact removal.
+              <strong>What this tool does NOT do:</strong>{' '}
+              {config.limitations?.doesNot ??
+                'We do NOT make false claims of "100% undetectable AI text" or guaranteed bypass of probabilistic AI classifiers. Probabilistic detectors analyze sentence structure, vocabulary distribution, and perplexity. Our tool delivers deterministic text hygiene and formatting artifact removal.'}
             </p>
           </div>
         </section>
@@ -285,56 +308,53 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
         </section>
 
         {/* Section: Related Tools & Internal Links */}
-        <section className="space-y-4 pt-6 border-t border-slate-200">
-          <h2 className="text-lg font-bold text-slate-900">
-            Explore Related AI Text Tools
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link
-              to="/claude-ai-text-watermark-remover"
-              className="p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-xs transition-all group"
-            >
-              <h3 className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600 flex items-center justify-between">
-                <span>Claude Remover</span>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-transform group-hover:translate-x-0.5" />
-              </h3>
-              <p className="text-xs text-slate-500 mt-1">Clean Claude text artifacts</p>
-            </Link>
+        {config.relatedTools && config.relatedTools.length > 0 && (
+          <section className="space-y-4 pt-6 border-t border-slate-200">
+            <h2 className="text-lg font-bold text-slate-900">
+              Related text tools
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {config.relatedTools
+                .filter((tool) => tool.to !== config.route)
+                .slice(0, 3)
+                .map((tool) => (
+                  <Link
+                    key={tool.to}
+                    to={tool.to}
+                    className="p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-xs transition-all group"
+                  >
+                    <h3 className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600 flex items-center justify-between gap-2">
+                      <span>{tool.title}</span>
+                      <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-transform group-hover:translate-x-0.5 shrink-0" />
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-1">{tool.description}</p>
+                  </Link>
+                ))}
+            </div>
+          </section>
+        )}
 
-            <Link
-              to="/chatgpt-ai-text-watermark-remover"
-              className="p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-xs transition-all group"
-            >
-              <h3 className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600 flex items-center justify-between">
-                <span>ChatGPT Remover</span>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-transform group-hover:translate-x-0.5" />
-              </h3>
-              <p className="text-xs text-slate-500 mt-1">Clean ChatGPT text artifacts</p>
-            </Link>
-
-            <Link
-              to="/ai-text-cleaner"
-              className="p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-xs transition-all group"
-            >
-              <h3 className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600 flex items-center justify-between">
-                <span>AI Text Cleaner</span>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-transform group-hover:translate-x-0.5" />
-              </h3>
-              <p className="text-xs text-slate-500 mt-1">Normalize formatting artifacts</p>
-            </Link>
-
-            <Link
-              to="/invisible-character-remover"
-              className="p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-xs transition-all group"
-            >
-              <h3 className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600 flex items-center justify-between">
-                <span>Invisible Char Remover</span>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-transform group-hover:translate-x-0.5" />
-              </h3>
-              <p className="text-xs text-slate-500 mt-1">Zero-width & BOM cleaner</p>
-            </Link>
-          </div>
-        </section>
+        {config.relatedGuides && config.relatedGuides.length > 0 && (
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-slate-900">
+              Related guides
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {config.relatedGuides.map((guide) => (
+                <Link
+                  key={guide.to}
+                  to={guide.to}
+                  className="p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 hover:shadow-xs transition-all group"
+                >
+                  <h3 className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600">
+                    {guide.title}
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-1">{guide.description}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
       </div>
 

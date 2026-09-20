@@ -33,6 +33,7 @@ export interface PageMetadata {
   twitterImage?: string;
   robots: string;
   structuredData?: JsonLd[];
+  breadcrumbs: { name: string; path: string }[];
 }
 
 interface PageSeoConfig {
@@ -52,7 +53,7 @@ const PAGE_SEO: Record<string, PageSeoConfig> = {
   '/chatgpt-ai-text-watermark-remover': {
     title: 'ChatGPT Watermark Remover – Clean ChatGPT Text Online',
     description:
-      'Clean ChatGPT-generated text by removing invisible characters, unwanted whitespace, formatting artifacts, and detectable Unicode text artifacts with a free online tool.',
+      'Free ChatGPT text cleaner. Inspect copied ChatGPT text for invisible characters, zero-width spaces, and formatting artifacts, then clean it in your browser.',
     breadcrumbName: 'ChatGPT AI Text Watermark Remover',
   },
   '/claude-ai-text-watermark-remover': {
@@ -262,7 +263,8 @@ function resolveToolConfig(path: string): ToolConfig | undefined {
 function withDefaults(
   path: string,
   config: PageSeoConfig,
-  structuredData: JsonLd[]
+  structuredData: JsonLd[],
+  breadcrumbs: { name: string; path: string }[]
 ): PageMetadata {
   const canonical = canonicalUrl(path);
   const ogType = config.ogType ?? 'website';
@@ -283,6 +285,7 @@ function withDefaults(
     twitterImage: SITE_LOGO_URL,
     robots: DEFAULT_ROBOTS,
     structuredData,
+    breadcrumbs,
   };
 }
 
@@ -303,12 +306,19 @@ function notFoundMetadata(path: string): PageMetadata {
     twitterDescription: 'The requested page could not be found on AI Watermark Tools.',
     twitterImage: SITE_LOGO_URL,
     robots: NOINDEX_ROBOTS,
+    breadcrumbs: [
+      { name: 'Home', path: '/' },
+      { name: 'Page Not Found', path },
+    ],
   };
 }
 
-function structuredDataForPath(path: string, config: PageSeoConfig): JsonLd[] {
+function structuredDataForPath(
+  path: string,
+  config: PageSeoConfig,
+  breadcrumbs: { name: string; path: string }[]
+): JsonLd[] {
   const url = canonicalUrl(path);
-  const crumbs = [{ name: 'Home', path: '/' }];
 
   if (path === '/') {
     return [
@@ -319,17 +329,13 @@ function structuredDataForPath(path: string, config: PageSeoConfig): JsonLd[] {
     ];
   }
 
-  if (path !== '/') {
-    crumbs.push({ name: config.breadcrumbName, path });
-  }
-
   const tool = resolveToolConfig(path);
   if (tool) {
     return [
       organizationLd(),
       softwareApplicationLd(tool.name, config.description, url),
       faqPageLd(tool.faqs),
-      breadcrumbLd(crumbs),
+      breadcrumbLd(breadcrumbs),
     ];
   }
 
@@ -343,11 +349,11 @@ function structuredDataForPath(path: string, config: PageSeoConfig): JsonLd[] {
         url,
         publisher: { '@id': `${SITE_URL}/#organization` },
       },
-      breadcrumbLd(crumbs),
+      breadcrumbLd(breadcrumbs),
     ];
   }
 
-  return [organizationLd(), webPageLd(config.breadcrumbName, config.description, url), breadcrumbLd(crumbs)];
+  return [organizationLd(), webPageLd(config.breadcrumbName, config.description, url), breadcrumbLd(breadcrumbs)];
 }
 
 export function getMetadataForPath(path: string): PageMetadata {
@@ -363,15 +369,20 @@ export function getMetadataForPath(path: string): PageMetadata {
     }
 
     const url = canonicalUrl(normalized);
-    return withDefaults(normalized, seo, [
+    const breadcrumbs = [
+      { name: 'Home', path: '/' },
+      { name: 'Blog', path: '/blog' },
+      { name: seo.breadcrumbName, path: normalized },
+    ];
+    const structured: JsonLd[] = [
       organizationLd(),
       blogPostingLd(post, url, seo.description),
-      breadcrumbLd([
-        { name: 'Home', path: '/' },
-        { name: 'Blog', path: '/blog' },
-        { name: post.title, path: normalized },
-      ]),
-    ]);
+      breadcrumbLd(breadcrumbs),
+    ];
+    if (post.faqs && post.faqs.length > 0) {
+      structured.push(faqPageLd(post.faqs));
+    }
+    return withDefaults(normalized, seo, structured, breadcrumbs);
   }
 
   const config = PAGE_SEO[normalized];
@@ -379,7 +390,15 @@ export function getMetadataForPath(path: string): PageMetadata {
     return notFoundMetadata(normalized);
   }
 
-  return withDefaults(normalized, config, structuredDataForPath(normalized, config));
+  const breadcrumbs =
+    normalized === '/'
+      ? [{ name: 'Home', path: '/' }]
+      : [
+          { name: 'Home', path: '/' },
+          { name: config.breadcrumbName, path: normalized },
+        ];
+
+  return withDefaults(normalized, config, structuredDataForPath(normalized, config, breadcrumbs), breadcrumbs);
 }
 
 export const DEFAULT_DOCUMENT_METADATA = getMetadataForPath('/');

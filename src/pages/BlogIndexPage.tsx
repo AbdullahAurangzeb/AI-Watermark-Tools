@@ -6,6 +6,7 @@ import { BLOG_POSTS } from '../data/blogData';
 import { BookOpen, ArrowRight, Search, Tag, Calendar, Clock } from 'lucide-react';
 import { AdPlaceholder } from '../components/ads/AdPlaceholder';
 import { SEOHead } from '../components/seo/SEOHead';
+import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 
 export function BlogIndexPage() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
@@ -26,6 +27,7 @@ export function BlogIndexPage() {
     <div className="flex-1 w-full py-10 md:py-16">
       <SEOHead />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-10">
+        <Breadcrumbs />
         
         {/* Header */}
         <div className="space-y-4 text-center">

@@ -24,6 +24,18 @@ export interface ToolFeature {
   iconName: string;
 }
 
+export interface InternalLinkItem {
+  to: string;
+  title: string;
+  description: string;
+}
+
+export interface ContentSection {
+  heading: string;
+  paragraphs: string[];
+  bullets?: string[];
+}
+
 export interface ToolConfig {
   id: string;
   name: string;
@@ -42,6 +54,11 @@ export interface ToolConfig {
     items: string[];
   }[];
   faqs: FAQItem[];
+  explainerSections?: ContentSection[];
+  howToSteps?: { title: string; description: string }[];
+  limitations?: { does: string; doesNot: string };
+  relatedTools?: InternalLinkItem[];
+  relatedGuides?: InternalLinkItem[];
 }
 
 export interface BlogPost {
@@ -54,6 +71,8 @@ export interface BlogPost {
   category: string;
   content: string;
   tags: string[];
+  faqs?: FAQItem[];
+  relatedTools?: InternalLinkItem[];
 }
 
 export interface DetectedCharacter {

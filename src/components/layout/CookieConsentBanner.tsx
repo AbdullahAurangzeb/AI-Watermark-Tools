@@ -52,7 +52,7 @@ export function CookieConsentBanner() {
               We respect your privacy & browser data
             </p>
             <p>
-              We and our advertising partners (including Google AdSense) use cookies and standard web technologies to analyze traffic and provide personalized advertisements. Your submitted text is processed <strong>100% locally in your browser</strong> and never stored. Review our{' '}
+              We use cookies and standard web technologies to analyze traffic, and this site participates in the Google AdSense program, which may use cookies to show personalized ads wherever advertisements are displayed. Your submitted text is processed <strong>100% locally in your browser</strong> and never stored. Review our{' '}
               <Link to="/privacy" className="text-indigo-600 font-semibold underline hover:text-indigo-800">
                 Privacy Policy
               </Link>{' '}

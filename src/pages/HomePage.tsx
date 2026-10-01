@@ -65,12 +65,32 @@ export function HomePage() {
           </div>
           <div className="flex items-center gap-1.5">
             <Lock className="w-4 h-4 text-indigo-600" />
-            <span>100% Client-Side Privacy</span>
+            <span>Text Cleaned in Your Browser</span>
           </div>
           <div className="flex items-center gap-1.5">
             <Zap className="w-4 h-4 text-amber-500" />
             <span>Instant Unicode Cleaning</span>
           </div>
+        </div>
+
+        {/* Primary CTA: start cleaning on this page, or jump to the most-used tool */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
+          <Button
+            variant="primary"
+            size="md"
+            rightIcon={<ArrowRight className="w-4 h-4" />}
+            onClick={() =>
+              document.getElementById('workspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+          >
+            Paste &amp; clean text now
+          </Button>
+          <Link
+            to="/invisible-character-remover"
+            className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 hover:underline"
+          >
+            Only need to find hidden characters?
+          </Link>
         </div>
 
       </div>
@@ -104,11 +124,11 @@ export function HomePage() {
               <ul className="text-xs text-slate-500 space-y-1.5 pt-2">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>Cleans Claude markdown & non-breaking spaces</span>
+                  <span>Normalizes non-breaking &amp; odd spaces in Claude copies</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>Preserves foreign scripts & code blocks</span>
+                  <span>Keeps non-Latin scripts, emoji &amp; wording intact</span>
                 </li>
               </ul>
             </div>
@@ -155,7 +175,7 @@ export function HomePage() {
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>Removes irregular spaces and sticky tabs</span>
+                  <span>Converts non-breaking &amp; odd spaces to normal ones</span>
                 </li>
               </ul>
             </div>
@@ -185,7 +205,7 @@ export function HomePage() {
           >
             <h2 className="text-base font-bold text-slate-900 group-hover:text-indigo-600">AI Text Cleaner</h2>
             <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-              Clean AI-generated text by normalizing whitespace and removing hidden Unicode characters.
+              General cleanup for AI drafts: hidden characters and copy-paste spacing, without rewriting.
             </p>
           </Link>
           <Link
@@ -194,7 +214,7 @@ export function HomePage() {
           >
             <h2 className="text-base font-bold text-slate-900 group-hover:text-indigo-600">Invisible Character Remover</h2>
             <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-              Find zero-width spaces and other hidden Unicode characters in copied text.
+              Find and remove zero-width spaces and other hidden Unicode characters in any copied text.
             </p>
           </Link>
           <Link
@@ -203,7 +223,7 @@ export function HomePage() {
           >
             <h2 className="text-base font-bold text-slate-900 group-hover:text-indigo-600">AI Text Watermark Remover</h2>
             <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-              Inspect detectable text artifacts that may appear in copied or AI-generated text.
+              Universal scan for text from mixed or unknown AI sources, with watermark limitations explained.
             </p>
           </Link>
         </div>
@@ -267,7 +287,7 @@ export function HomePage() {
       </div>
 
       {/* Main Interactive Tool Workspace on Homepage */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+      <div id="workspace" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 scroll-mt-24">
         <TextTool
           key={selectedProvider}
           toolName={
@@ -319,6 +339,69 @@ export function HomePage() {
             </p>
           </Card>
         </section>
+
+        {/* Section: What "AI watermark" can mean, and which tool fits */}
+        <section className="space-y-6" aria-labelledby="watermark-meanings-heading">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <h2 id="watermark-meanings-heading" className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              What “AI watermark” can mean, and what these tools clean
+            </h2>
+            <p className="text-sm text-slate-500">
+              The same phrase is used for four different things. Only some of them live in the characters of your text.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Card variant="default" className="p-5 space-y-2">
+              <h3 className="text-base font-bold text-slate-900">Invisible Unicode characters</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Zero-width spaces, byte-order marks, and similar code points that can ride along with copied text. These are
+                real characters, so they can be found and removed with the{' '}
+                <Link to="/invisible-character-remover" className="text-indigo-600 font-semibold hover:underline">
+                  invisible character remover
+                </Link>
+                .
+              </p>
+            </Card>
+            <Card variant="default" className="p-5 space-y-2">
+              <h3 className="text-base font-bold text-slate-900">Formatting and copy-paste artifacts</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Non-breaking spaces, odd spacing, and markdown leftovers from chat interfaces. The{' '}
+                <Link to="/ai-text-cleaner" className="text-indigo-600 font-semibold hover:underline">
+                  AI text cleaner
+                </Link>{' '}
+                normalizes these without rewriting your sentences. For replies copied from ChatGPT, the{' '}
+                <Link to="/chatgpt-ai-text-watermark-remover" className="text-indigo-600 font-semibold hover:underline">
+                  ChatGPT text cleaner
+                </Link>{' '}
+                explains the usual suspects.
+              </p>
+            </Card>
+            <Card variant="default" className="p-5 space-y-2">
+              <h3 className="text-base font-bold text-slate-900">Statistical watermarks</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                A researched technique where a model’s word choices follow a hidden pattern. It is not a character you can
+                delete, and these tools neither detect nor remove it. Read{' '}
+                <Link to="/blog/does-chatgpt-watermark-text" className="text-indigo-600 font-semibold hover:underline">
+                  whether ChatGPT watermarks text
+                </Link>{' '}
+                for the details.
+              </p>
+            </Card>
+            <Card variant="default" className="p-5 space-y-2">
+              <h3 className="text-base font-bold text-slate-900">AI detection</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Detectors are separate classifiers that score writing patterns. Cleaning hidden characters does not change
+                your wording, so it should not be expected to change a detector result. If your text comes from several
+                assistants, start with the{' '}
+                <Link to="/ai-text-watermark-remover" className="text-indigo-600 font-semibold hover:underline">
+                  universal AI text watermark remover
+                </Link>{' '}
+                and its limitations section.
+              </p>
+            </Card>
+          </div>
+        </section>
         
         {/* Section: How It Works */}
         <section className="space-y-6">
@@ -358,7 +441,7 @@ export function HomePage() {
               </div>
               <h3 className="font-semibold text-slate-900 text-base">Purge & Clean</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Clean text deterministically without altering vocabulary, syntax, or formatting.
+                Remove cataloged hidden characters and normalize odd spaces without altering your wording.
               </p>
             </Card>
 
@@ -392,7 +475,7 @@ export function HomePage() {
               </div>
               <h3 className="text-base font-bold text-slate-900">Invisible Character Detection</h3>
               <p className="text-sm text-slate-500 leading-relaxed">
-                Find and purge zero-width spaces (U+200B), non-joiners (U+200C), joiners (U+200D), and byte order marks (U+FEFF).
+                Report zero-width spaces, joiners, direction marks, and byte order marks; remove the ones that rarely belong in plain text (U+200B, U+2060, U+FEFF, U+00AD).
               </p>
             </Card>
 
@@ -402,7 +485,7 @@ export function HomePage() {
               </div>
               <h3 className="text-base font-bold text-slate-900">Whitespace Normalization</h3>
               <p className="text-sm text-slate-500 leading-relaxed">
-                Detect and standardize sticky non-breaking spaces (U+00A0), multiple space sequences, and erratic tabulations.
+                Convert non-breaking (U+00A0) and typographic spaces to normal spaces, collapse long space runs, and trim trailing spaces.
               </p>
             </Card>
 
@@ -412,7 +495,7 @@ export function HomePage() {
               </div>
               <h3 className="text-base font-bold text-slate-900">International Script Safe</h3>
               <p className="text-sm text-slate-500 leading-relaxed">
-                Conservative filtering guarantees Arabic, Urdu, Chinese, Japanese, Cyrillic, and emojis remain untouched.
+                Conservative rules leave Arabic, Urdu, Chinese, Japanese, Cyrillic, and emoji untouched, including the joiners they rely on.
               </p>
             </Card>
 
@@ -430,9 +513,9 @@ export function HomePage() {
               <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600 w-fit">
                 <Sliders className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Optional AI Rewriting</h3>
+              <h3 className="text-base font-bold text-slate-900">Optional AI Rewriting (Coming Soon)</h3>
               <p className="text-sm text-slate-500 leading-relaxed">
-                Restructure and rephrase sentences naturally while preserving your exact original meaning and tone.
+                A separate, opt-in rewriting feature is in preview. Cleaning never rewrites your text.
               </p>
             </Card>
 
@@ -440,9 +523,10 @@ export function HomePage() {
               <div className="p-2.5 rounded-xl bg-rose-50 text-rose-600 w-fit">
                 <Lock className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">100% Privacy by Design</h3>
+              <h3 className="text-base font-bold text-slate-900">Privacy by Design</h3>
               <p className="text-sm text-slate-500 leading-relaxed">
-                Your content is processed client-side. No accounts, no database records, no telemetry tracking.
+                Pasted text is analyzed and cleaned in your browser and is not stored. No account needed. The site uses
+                Google Analytics for anonymous page-view statistics.
               </p>
             </Card>
           </div>
@@ -464,7 +548,10 @@ export function HomePage() {
               Many tools on the internet claim to "make AI text 100% undetectable" or guarantee a bypass for all AI content detectors. These claims are fundamentally false and misleading.
             </p>
             <p>
-              <strong>What our tools actually do:</strong> We perform rigorous deterministic analysis to detect and remove invisible Unicode characters, zero-width spaces, byte order marks, and irregular formatting artifacts that get embedded when copying AI text from web interfaces.
+              <strong>What our tools actually do:</strong> We perform deterministic, character-level analysis to detect invisible Unicode characters and unusual whitespace, remove the supported ones, and normalize spacing artifacts that can come along when copying text from web interfaces.
+            </p>
+            <p>
+              <strong>What they do not do:</strong> They do not detect or remove statistical watermarks, do not rewrite your text, and do not promise any AI-detector outcome.
             </p>
           </div>
         </section>
@@ -493,6 +580,7 @@ export function HomePage() {
                     onClick={() => toggleFaq(index)}
                     className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 font-semibold text-slate-900 hover:text-indigo-600 focus:outline-none"
                     aria-expanded={isOpen}
+                    aria-controls={`home-faq-answer-${index}`}
                   >
                     <span className="text-base">{faq.question}</span>
                     <ChevronDown
@@ -501,11 +589,9 @@ export function HomePage() {
                       }`}
                     />
                   </button>
-                  {isOpen && (
-                    <div className="px-4 sm:px-5 pb-5 pt-1 text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-                      {faq.answer}
-                    </div>
-                  )}
+                  <div id={`home-faq-answer-${index}`} hidden={!isOpen} className="px-4 sm:px-5 pb-5 pt-1 text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                    {faq.answer}
+                  </div>
                 </div>
               );
             })}

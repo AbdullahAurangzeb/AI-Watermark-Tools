@@ -12,6 +12,15 @@ export const SITE_FAVICON_PATH = '/favicon.ico';
 
 export const SITE_LOGO_URL = `${SITE_URL}${SITE_LOGO_PATH}`;
 
+/** 1200x630 social preview image (Open Graph / Twitter). The square logo stays the Organization logo. */
+export const SITE_OG_IMAGE_PATH = '/og-image.jpg';
+export const SITE_OG_IMAGE_URL = `${SITE_URL}${SITE_OG_IMAGE_PATH}`;
+export const SITE_OG_IMAGE_WIDTH = 1200;
+export const SITE_OG_IMAGE_HEIGHT = 630;
+export const SITE_OG_IMAGE_TYPE = 'image/jpeg';
+export const SITE_OG_IMAGE_ALT =
+  'AI Watermark Tools – free AI text cleaner and invisible character remover';
+
 export type SitemapChangefreq =
   | 'always'
   | 'hourly'

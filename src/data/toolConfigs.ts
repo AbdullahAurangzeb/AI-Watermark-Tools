@@ -31,7 +31,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       },
       {
         title: 'Whitespace Normalization',
-        description: 'Fixes irregular non-breaking spaces (U+00A0), multiple space clusters, and trailing line returns.',
+        description: 'Converts non-breaking spaces (U+00A0) to normal spaces, collapses long runs of spaces, and trims trailing spaces at line ends.',
         iconName: 'FileCode',
       },
       {
@@ -63,8 +63,8 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
           'Non-Breaking Spaces (U+00A0)',
           'En / Em Spaces (U+2002, U+2003)',
           'Thin & Hair Spaces (U+2009, U+200A)',
-          'Consecutive space sequences',
-          'Inadvertent markdown copy fragments',
+          'Runs of three or more spaces',
+          'Unclosed ``` code fences (reported, not changed)',
         ],
       },
     ],
@@ -108,7 +108,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       },
     ],
     limitations: {
-      does: 'Detects and removes invisible Unicode control characters, zero-width spaces, byte-order marks, non-breaking spaces, and formatting artifacts that can appear when copying Claude text.',
+      does: 'Detects invisible Unicode characters and unusual whitespace in copied Claude text. Removes zero-width spaces, word joiners, byte-order marks, and soft hyphens, and converts non-breaking and typographic spaces to normal spaces.',
       doesNot: 'This page does not claim that Claude inserts a cryptographic watermark into every answer, and it does not guarantee bypass of AI detectors. Detectors typically look at writing patterns, not only hidden characters.',
     },
     relatedTools: [
@@ -143,7 +143,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     faqs: [
       {
         question: 'What does this Claude text cleaner remove?',
-        answer: 'It removes cataloged invisible Unicode characters, zero-width spaces, byte-order marks, non-breaking spaces, and irregular whitespace that can appear in copied Claude text. It does not rewrite your sentences.',
+        answer: 'It removes zero-width spaces, word joiners, byte-order marks, and soft hyphens, converts non-breaking and typographic spaces to normal spaces, and tidies extra spacing. Zero-width joiners and direction marks are reported but kept. It does not rewrite your sentences.',
       },
       {
         question: 'Does Claude watermark text?',
@@ -174,6 +174,18 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     h1: 'ChatGPT AI Text Watermark Remover',
     heroBadge: 'Specialized OpenAI ChatGPT Text Cleaner',
     leadParagraph: 'Clean copied ChatGPT text by inspecting it for invisible characters, zero-width spaces, unusual whitespace, and formatting artifacts. This is a text cleaner, not a detector-bypass tool.',
+    introSummary: {
+      heading: 'What this ChatGPT text cleaner does',
+      points: [
+        'Shows which hidden Unicode characters and unusual spaces are in the text you paste',
+        'Removes zero-width spaces, word joiners, byte-order marks, and soft hyphens',
+        'Turns non-breaking and other odd spaces into normal spaces and trims stray spacing',
+        'Keeps your wording, punctuation, emoji, and line breaks; it never rewrites the reply',
+        'Runs in your browser; pasted text is not stored',
+        'Does not detect or remove a statistical watermark, and does not change AI-detector results',
+      ],
+    },
+    showCleanerReference: true,
     primaryKeywords: [
       'ChatGPT ai text watermark remover',
       'ChatGPT text watermark remover',
@@ -194,7 +206,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       },
       {
         title: 'NBSP & Space Normalization',
-        description: 'Replaces sticky non-breaking spaces (U+00A0) and irregular tabulations with clean standard spaces.',
+        description: 'Replaces non-breaking spaces (U+00A0), thin spaces, and other typographic spaces with standard spaces, and trims trailing spaces and tabs.',
         iconName: 'FileCode',
       },
       {
@@ -215,19 +227,19 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
           'Zero Width Space (U+200B)',
           'Zero Width Non-Joiner (U+200C)',
           'Zero Width Joiner (U+200D)',
-          'Zero Width No-Break Space (U+FEFF)',
+          'Zero Width No-Break Space / BOM (U+FEFF)',
+          'Word Joiner (U+2060)',
           'Soft Hyphens (U+00AD)',
-          'Control characters (U+0000 - U+001F)',
         ],
       },
       {
         title: 'ChatGPT Copy-Paste Formatting Issues',
         items: [
-          'Non-Breaking Spaces (U+00A0)',
-          'Mathematical & Ideographic Spaces (U+3000)',
-          'Trailing formatting characters',
-          'Triple space and inconsistent indentations',
-          'Fragmented markdown code fence remnants',
+          'Non-Breaking Spaces (U+00A0, U+202F)',
+          'Thin, hair, en, and em spaces (U+2000–U+200A)',
+          'Trailing spaces and tabs at line ends',
+          'Runs of three or more spaces',
+          'Unclosed ``` code fences (reported, not changed)',
         ],
       },
     ],
@@ -249,6 +261,13 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
           'Invisible Unicode characters and zero-width spaces',
           'Non-breaking spaces and unusual whitespace',
           'Copy-paste formatting around markdown and lists',
+        ],
+      },
+      {
+        heading: 'Fixing odd spaces in copied ChatGPT text',
+        paragraphs: [
+          'A common complaint after pasting a ChatGPT reply is spacing that looks normal but behaves strangely: words that refuse to wrap, double gaps, or search that misses a phrase you can clearly see. Non-breaking spaces and zero-width spaces are the usual reasons.',
+          'The cleaner converts non-breaking and typographic spaces into regular spaces, removes zero-width spaces, and trims trailing spaces at the end of lines. Long runs of spaces are collapsed to one, so check indented code before you paste it back into an editor.',
         ],
       },
       {
@@ -277,7 +296,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       },
     ],
     limitations: {
-      does: 'Detects and removes invisible Unicode characters, zero-width spaces, byte-order marks, non-breaking spaces, and formatting artifacts that can appear in copied ChatGPT text.',
+      does: 'Detects invisible Unicode characters and unusual whitespace in copied ChatGPT text. Removes zero-width spaces, word joiners, byte-order marks, and soft hyphens, converts non-breaking and typographic spaces to normal spaces, and tidies extra spacing.',
       doesNot: 'This is not a ChatGPT watermark detector in the statistical sense, and it does not guarantee that cleaned text will pass AI detectors. It does not claim that every ChatGPT reply contains a removable hidden watermark.',
     },
     relatedTools: [
@@ -312,7 +331,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     faqs: [
       {
         question: 'What does this ChatGPT watermark remover actually remove?',
-        answer: 'It removes detectable text artifacts in the string you paste: invisible Unicode characters, zero-width spaces, byte-order marks, non-breaking spaces, and irregular whitespace. It does not rewrite ChatGPT’s wording.',
+        answer: 'It works on characters in the string you paste. Zero-width spaces, word joiners, byte-order marks, and soft hyphens are removed; non-breaking and typographic spaces become normal spaces; extra spacing is tidied. Zero-width joiners and direction marks are reported but kept. It does not rewrite ChatGPT’s wording.',
       },
       {
         question: 'Does ChatGPT watermark text?',
@@ -324,7 +343,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       },
       {
         question: 'Does cleaning change the meaning of my text?',
-        answer: 'No. Words, punctuation, emojis, and non-Latin scripts stay in place. Only cataloged hidden characters and abnormal whitespace are changed.',
+        answer: 'No. Words, punctuation, emojis, line breaks, and non-Latin scripts stay in place. Only cataloged hidden characters and spacing are changed. Long runs of spaces are collapsed, which can affect indented code.',
       },
       {
         question: 'Does the tool store my ChatGPT text?',
@@ -500,10 +519,22 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     provider: 'general',
     route: '/ai-text-cleaner',
     pageTitle: 'AI Text Cleaner – Clean AI-Generated Text Online',
-    metaDescription: 'Clean AI-generated text online by removing hidden Unicode characters, zero-width spaces, unwanted whitespace, and formatting artifacts.',
+    metaDescription: 'Clean AI-generated text without rewriting it. Remove hidden Unicode characters and zero-width spaces, and fix non-breaking spaces and copy-paste spacing.',
     h1: 'AI Text Cleaner',
     heroBadge: 'Fast Formatting & Whitespace Normalizer',
     leadParagraph: 'Clean AI-generated text by removing hidden Unicode characters, zero-width spaces, non-breaking spaces, and formatting artifacts while keeping the original wording.',
+    introSummary: {
+      heading: 'What “AI text cleaning” means here',
+      points: [
+        'Removes invisible Unicode characters such as zero-width spaces and byte-order marks',
+        'Converts non-breaking and typographic spaces into ordinary spaces',
+        'Tidies copy-paste spacing: long space runs and trailing spaces at line ends',
+        'Reports characters that may be legitimate (joiners, direction marks) instead of deleting them',
+        'Keeps every word, sentence, and line break exactly as written',
+        'Cleaning is not rewriting or paraphrasing, and it is not an AI-detector bypass',
+      ],
+    },
+    showCleanerReference: true,
     primaryKeywords: [
       'AI text cleaner',
       'clean AI text',
@@ -516,7 +547,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     features: [
       {
         title: 'Whitespace Cleanup',
-        description: 'Normalizes non-breaking spaces, excessive tabulations, and irregular line breaks.',
+        description: 'Converts non-breaking and typographic spaces to normal spaces, collapses long space runs, and trims trailing spaces and tabs.',
         iconName: 'FileCode',
       },
       {
@@ -542,7 +573,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
           'Multiple continuous space sequences',
           'Sticky non-breaking space (NBSP) characters',
           'Zero-width spaces and related hidden markers',
-          'Excessive trailing carriage returns',
+          'Trailing spaces and tabs at line ends',
         ],
       },
       {
@@ -576,6 +607,13 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         ],
       },
       {
+        heading: 'Cleaning is not rewriting',
+        paragraphs: [
+          'Some tools described as an “AI scrubber” or “AI text sanitizer” paraphrase the whole draft. This cleaner does not. It changes characters, not sentences: if a word, phrase, or paragraph was in the input, it is in the output.',
+          'That makes it safe for text you have already edited and approved, such as product copy, documentation, emails, or code comments. If you want different wording, that is an editing task, and an optional rewriting feature is kept separate from cleaning.',
+        ],
+      },
+      {
         heading: 'How to clean AI-generated text',
         paragraphs: [
           'Paste the draft, review the analysis, run the cleaner, then copy the result into your editor. If you only care about hidden characters, the Invisible Character Remover is a more focused scan. If the text is specifically from ChatGPT or Claude, those tool pages explain source-specific copy-paste issues.',
@@ -601,7 +639,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       },
     ],
     limitations: {
-      does: 'Cleans hidden Unicode characters, zero-width spaces, non-breaking spaces, unusual whitespace, and formatting artifacts in AI-generated or copied text.',
+      does: 'Removes zero-width spaces, word joiners, byte-order marks, and soft hyphens; converts non-breaking and typographic spaces to normal spaces; collapses long space runs and trims trailing spaces in AI-generated or copied text.',
       doesNot: 'It does not paraphrase content, guarantee detector bypass, or claim that cleaning equals removing an AI watermark.',
     },
     relatedTools: [
@@ -651,8 +689,8 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         answer: 'Cleaning runs in your browser. Pasted text is not stored in a database.',
       },
       {
-        question: 'Is this an AI paraphraser?',
-        answer: 'No. Optional rewriting is a separate, opt-in feature and is not required for cleaning.',
+        question: 'Is this an AI paraphraser or AI scrubber?',
+        answer: 'No. The cleaner does not paraphrase or “humanize” text, and it does not promise any AI-detector result. Optional rewriting is a separate, opt-in feature and is not required for cleaning.',
       },
     ],
   },
@@ -663,10 +701,22 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     provider: 'invisible',
     route: '/invisible-character-remover',
     pageTitle: 'Invisible Character Remover – Clean Hidden Unicode Text',
-    metaDescription: 'Remove invisible characters, zero-width spaces, hidden Unicode characters, non-breaking spaces, and other unwanted text artifacts with this free online cleaner.',
+    metaDescription: 'Find and remove invisible characters in copied text: zero-width spaces, BOM, soft hyphens, and non-breaking spaces. Emoji joiners and script marks are kept.',
     h1: 'Invisible Character Remover',
     heroBadge: 'Zero-Width & Unicode Control Character Scanner',
     leadParagraph: 'Find and remove invisible Unicode characters, zero-width spaces, non-breaking spaces, and other hidden code points that can travel with copied text.',
+    introSummary: {
+      heading: 'What this invisible character remover does',
+      points: [
+        'Lists the hidden Unicode characters it finds, with a count for each',
+        'Removes zero-width spaces (U+200B), word joiners, byte-order marks, and soft hyphens',
+        'Converts non-breaking and typographic spaces into normal spaces',
+        'Keeps zero-width joiners, non-joiners, and direction marks that emoji and some scripts need',
+        'Works on any copied text, including AI-generated drafts',
+        'Hidden characters are not proof of an AI watermark, and removing them does not remove one',
+      ],
+    },
+    showCleanerReference: true,
     primaryKeywords: [
       'invisible character remover',
       'remove invisible characters',
@@ -684,13 +734,13 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         iconName: 'Search',
       },
       {
-        title: 'Detailed Position Mapping',
-        description: 'Identifies exact character counts and occurrences of invisible elements inside your string.',
+        title: 'Per-Character Report',
+        description: 'Lists each hidden character found, its code point, and how many times it occurs in your string.',
         iconName: 'Layers',
       },
       {
         title: 'Surgical Removal',
-        description: 'Safely removes hidden markers while preserving emojis and proper foreign language ligatures.',
+        description: 'Removes stray hidden markers while leaving zero-width joiners and non-joiners in place, so emoji sequences and joined scripts are not broken.',
         iconName: 'ShieldCheck',
       },
       {
@@ -709,6 +759,17 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
           'U+2060 : Word Joiner',
           'U+FEFF : Zero Width No-Break Space (BOM)',
           'U+00AD : Soft Hyphen',
+          'U+180E : Mongolian Vowel Separator',
+        ],
+      },
+      {
+        title: 'Direction Marks & Unusual Spaces',
+        items: [
+          'U+200E / U+200F : Left-to-Right and Right-to-Left Marks',
+          'U+202A – U+202E : Bidirectional embedding and override controls',
+          'U+00A0 / U+202F : Non-Breaking Spaces',
+          'U+2000 – U+200A : En, em, thin, and hair spaces',
+          'U+3000 : Ideographic Space',
         ],
       },
     ],
@@ -732,6 +793,13 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
           'Non-breaking space (U+00A0): looks like a space, behaves differently',
         ],
       },
+      {
+        heading: 'Hidden characters in AI-generated text',
+        paragraphs: [
+          'Text copied from ChatGPT, Claude, or other assistants can contain the same hidden characters as any other web text. They usually come from the page, the editor, or the original source being quoted, not from a secret marker. Finding a zero-width space in an AI draft does not prove the text was watermarked, and removing it does not remove a statistical watermark.',
+          'Not every invisible character should be deleted. Zero-width joiners hold emoji sequences together, zero-width non-joiners matter in Persian and related scripts, and direction marks keep mixed right-to-left and left-to-right text readable. This remover reports those characters but leaves them in place.',
+        ],
+      },
     ],
     howToSteps: [
       {
@@ -752,8 +820,8 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       },
     ],
     limitations: {
-      does: 'Detects and removes cataloged invisible Unicode characters, zero-width spaces, BOM markers, soft hyphens, and related hidden or sticky spacing characters.',
-      doesNot: 'It does not decode encrypted watermarks, and it does not claim that hidden characters are proof of an AI watermark. Some joiners are preserved when they are needed for emoji sequences.',
+      does: 'Detects cataloged invisible Unicode characters and unusual spaces. Removes zero-width spaces, word joiners, BOM markers, and soft hyphens, and converts non-breaking and typographic spaces to normal spaces.',
+      doesNot: 'It does not decode or remove statistical watermarks, and hidden characters are not proof that text was AI-generated or watermarked. Zero-width joiners, non-joiners, and direction marks are reported but left in place.',
     },
     relatedTools: [
       {
@@ -779,9 +847,19 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         description: 'Detect, then clean cataloged hidden Unicode code points',
       },
       {
+        to: '/blog/how-to-detect-hidden-unicode-characters',
+        title: 'How to detect hidden Unicode characters',
+        description: 'Practical checks to find zero-width and unusual spaces before cleaning',
+      },
+      {
         to: '/blog/zero-width-space-u200b-explained',
         title: 'Zero Width Space (U+200B) explained',
         description: 'What U+200B is, when it is useful, and how to remove it',
+      },
+      {
+        to: '/blog/what-are-invisible-unicode-characters',
+        title: 'What are invisible Unicode characters?',
+        description: 'A reference to zero-width spaces, joiners, BOM, and NBSP',
       },
     ],
     faqs: [
@@ -791,11 +869,11 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       },
       {
         question: 'Does this remove invisible Unicode characters?',
-        answer: 'Yes. It scans for cataloged hidden characters including zero-width spaces, word joiners, BOM, and soft hyphens, then removes the ones marked for cleaning.',
+        answer: 'Yes, the ones that rarely belong in plain text: zero-width spaces, word joiners, byte-order marks, and soft hyphens are removed, and non-breaking spaces become normal spaces. Characters that can be legitimate, such as zero-width joiners and direction marks, are reported but kept.',
       },
       {
         question: 'Will emoji and other languages break?',
-        answer: 'The cleaner is conservative. Visible letters, including Arabic, Chinese, and Japanese, stay intact. Zero-width joiners used in emoji sequences are treated carefully so combined emoji are not split.',
+        answer: 'The cleaner is conservative. Visible letters, including Arabic, Chinese, and Japanese, stay intact. Zero-width joiners (U+200D) and non-joiners (U+200C) are never removed automatically, so combined emoji and joined scripts are not split.',
       },
       {
         question: 'Does cleaning change the meaning of my text?',

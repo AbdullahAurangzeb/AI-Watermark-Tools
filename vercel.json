@@ -18,6 +18,10 @@
       "destination": "/logo.jpg"
     },
     {
+      "source": "/og-image.jpg",
+      "destination": "/og-image.jpg"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

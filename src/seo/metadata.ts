@@ -7,6 +7,11 @@ import {
   NOINDEX_ROBOTS,
   SITE_LOGO_URL,
   SITE_NAME,
+  SITE_OG_IMAGE_ALT,
+  SITE_OG_IMAGE_HEIGHT,
+  SITE_OG_IMAGE_TYPE,
+  SITE_OG_IMAGE_URL,
+  SITE_OG_IMAGE_WIDTH,
   SITE_TWITTER_CARD,
   SITE_URL,
   canonicalUrl,
@@ -27,6 +32,10 @@ export interface PageMetadata {
   ogUrl: string;
   ogSiteName: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+  ogImageType?: string;
   twitterCard: string;
   twitterTitle: string;
   twitterDescription: string;
@@ -71,13 +80,13 @@ const PAGE_SEO: Record<string, PageSeoConfig> = {
   '/ai-text-cleaner': {
     title: 'AI Text Cleaner – Clean AI-Generated Text Online',
     description:
-      'Clean AI-generated text online by removing hidden Unicode characters, zero-width spaces, unwanted whitespace, and formatting artifacts.',
+      'Clean AI-generated text without rewriting it. Remove hidden Unicode characters and zero-width spaces, and fix non-breaking spaces and copy-paste spacing.',
     breadcrumbName: 'AI Text Cleaner',
   },
   '/invisible-character-remover': {
     title: 'Invisible Character Remover – Clean Hidden Unicode Text',
     description:
-      'Remove invisible characters, zero-width spaces, hidden Unicode characters, non-breaking spaces, and other unwanted text artifacts with this free online cleaner.',
+      'Find and remove invisible characters in copied text: zero-width spaces, BOM, soft hyphens, and non-breaking spaces. Emoji joiners and script marks are kept.',
     breadcrumbName: 'Invisible Character Remover',
   },
   '/blog': {
@@ -120,9 +129,9 @@ const PAGE_SEO: Record<string, PageSeoConfig> = {
 
 const BLOG_SEO: Record<string, PageSeoConfig> = {
   'does-chatgpt-watermark-text': {
-    title: 'Does ChatGPT Watermark Text? What You Should Know',
+    title: 'Does ChatGPT Watermark Text? Watermarks vs Hidden Characters',
     description:
-      'Does ChatGPT watermark text? Learn about claims surrounding AI text watermarks, hidden characters, formatting artifacts, and how to inspect ChatGPT-generated text.',
+      'Does ChatGPT leave a watermark in copied text? How statistical watermarking differs from hidden Unicode characters, copy-paste artifacts, and AI detection.',
     ogType: 'article',
     breadcrumbName: 'Does ChatGPT Watermark Text?',
   },
@@ -230,6 +239,11 @@ function softwareApplicationLd(name: string, description: string, url: string): 
     operatingSystem: 'Any',
     url,
     description,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
     publisher: { '@id': `${SITE_URL}/#organization` },
   };
 }
@@ -277,6 +291,8 @@ function blogPostingLd(post: BlogPost, url: string, seoDescription: string): Jso
     description: seoDescription,
     url,
     datePublished: post.publishedDate,
+    ...(post.updatedDate ? { dateModified: post.updatedDate } : {}),
+    image: SITE_OG_IMAGE_URL,
     author: {
       '@type': 'Organization',
       name: post.author,
@@ -313,11 +329,15 @@ function withDefaults(
     ogType,
     ogUrl: canonical,
     ogSiteName: SITE_NAME,
-    ogImage: SITE_LOGO_URL,
+    ogImage: SITE_OG_IMAGE_URL,
+    ogImageAlt: SITE_OG_IMAGE_ALT,
+    ogImageWidth: SITE_OG_IMAGE_WIDTH,
+    ogImageHeight: SITE_OG_IMAGE_HEIGHT,
+    ogImageType: SITE_OG_IMAGE_TYPE,
     twitterCard: SITE_TWITTER_CARD,
     twitterTitle: config.title,
     twitterDescription: config.description,
-    twitterImage: SITE_LOGO_URL,
+    twitterImage: SITE_OG_IMAGE_URL,
     robots: DEFAULT_ROBOTS,
     structuredData,
     breadcrumbs,
@@ -335,11 +355,15 @@ function notFoundMetadata(path: string): PageMetadata {
     ogType: 'website',
     ogUrl: canonical,
     ogSiteName: SITE_NAME,
-    ogImage: SITE_LOGO_URL,
+    ogImage: SITE_OG_IMAGE_URL,
+    ogImageAlt: SITE_OG_IMAGE_ALT,
+    ogImageWidth: SITE_OG_IMAGE_WIDTH,
+    ogImageHeight: SITE_OG_IMAGE_HEIGHT,
+    ogImageType: SITE_OG_IMAGE_TYPE,
     twitterCard: SITE_TWITTER_CARD,
     twitterTitle: 'Page Not Found – AI Watermark Tools',
     twitterDescription: 'The requested page could not be found on AI Watermark Tools.',
-    twitterImage: SITE_LOGO_URL,
+    twitterImage: SITE_OG_IMAGE_URL,
     robots: NOINDEX_ROBOTS,
     breadcrumbs: [
       { name: 'Home', path: '/' },

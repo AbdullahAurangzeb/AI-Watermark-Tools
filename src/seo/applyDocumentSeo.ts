@@ -62,8 +62,12 @@ export function applyDocumentSeo(meta: PageMetadata) {
 
   if (meta.ogImage) {
     setMetaByAttr('property', 'og:image', meta.ogImage);
-    setMetaByAttr('property', 'og:image:type', 'image/jpeg');
-    setMetaByAttr('property', 'og:image:alt', `${SITE_NAME} logo`);
+    setMetaByAttr('property', 'og:image:type', meta.ogImageType || 'image/jpeg');
+    if (meta.ogImageWidth && meta.ogImageHeight) {
+      setMetaByAttr('property', 'og:image:width', String(meta.ogImageWidth));
+      setMetaByAttr('property', 'og:image:height', String(meta.ogImageHeight));
+    }
+    setMetaByAttr('property', 'og:image:alt', meta.ogImageAlt || `${SITE_NAME} logo`);
   }
 
   setMetaByAttr('name', 'twitter:card', meta.twitterCard);
@@ -72,6 +76,7 @@ export function applyDocumentSeo(meta: PageMetadata) {
 
   if (meta.twitterImage) {
     setMetaByAttr('name', 'twitter:image', meta.twitterImage);
+    setMetaByAttr('name', 'twitter:image:alt', meta.ogImageAlt || `${SITE_NAME} logo`);
   }
 
   setJsonLd(meta.structuredData);

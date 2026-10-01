@@ -1,14 +1,11 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import dotenv from 'dotenv';
 import { buildRobotsTxt, buildSitemapXml, getPublicSiteUrl } from './src/seo/site';
 
 dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -154,7 +151,19 @@ async function start() {
         return next();
       }
 
-      res.sendFile(indexPath, (error) => {
+      // Prefer the route's prerendered HTML (dist/<route>/index.html), which carries
+      // that page's title, canonical, Open Graph tags, and JSON-LD before JS runs.
+      // Unknown routes fall back to the app shell, which renders the 404 view.
+      let htmlPath = indexPath;
+      const routeSegment = req.path.replace(/^\/+|\/+$/g, '');
+      if (routeSegment && !routeSegment.includes('..')) {
+        const candidate = path.join(distPath, routeSegment, 'index.html');
+        if (candidate.startsWith(distPath + path.sep) && fs.existsSync(candidate)) {
+          htmlPath = candidate;
+        }
+      }
+
+      res.sendFile(htmlPath, (error) => {
         if (error) {
           console.error(
             `[SPA Fallback] Failed to serve index.html for ${req.path}`,

@@ -57,6 +57,10 @@ export interface ToolConfig {
   explainerSections?: ContentSection[];
   howToSteps?: { title: string; description: string }[];
   limitations?: { does: string; doesNot: string };
+  /** Short plain-language summary shown above the tool interface. */
+  introSummary?: { heading: string; points: string[] };
+  /** Render the shared "what the cleaner removes / keeps" reference section. */
+  showCleanerReference?: boolean;
   relatedTools?: InternalLinkItem[];
   relatedGuides?: InternalLinkItem[];
 }
@@ -67,6 +71,8 @@ export interface BlogPost {
   description: string;
   readTime: string;
   publishedDate: string;
+  /** ISO date of the last substantive content update, when there was one. */
+  updatedDate?: string;
   author: string;
   category: string;
   content: string;

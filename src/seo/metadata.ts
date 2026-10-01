@@ -295,7 +295,9 @@ function blogPostingLd(post: BlogPost, url: string, seoDescription: string): Jso
     image: SITE_OG_IMAGE_URL,
     author: {
       '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
       name: post.author,
+      url: `${SITE_URL}/`,
     },
     publisher: {
       '@id': `${SITE_URL}/#organization`,

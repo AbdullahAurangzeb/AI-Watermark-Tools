@@ -36,9 +36,9 @@ export const CLEANER_BEHAVIOR: CleanerBehaviorGroup[] = [
     title: 'Whitespace tidied',
     summary: 'Spacing leftovers from copy and paste.',
     items: [
-      'Runs of three or more spaces are collapsed to one space (this includes indentation, so review code before pasting it back)',
+      'Runs of three or more spaces between words are collapsed to one space',
       'Trailing spaces and tabs at the end of a line are removed',
-      'Line breaks and paragraph breaks are kept as they are',
+      'Leading indentation, line breaks, and paragraph breaks are kept as they are',
     ],
   },
   {

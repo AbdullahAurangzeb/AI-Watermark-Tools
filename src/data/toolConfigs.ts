@@ -63,7 +63,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
           'Non-Breaking Spaces (U+00A0)',
           'En / Em Spaces (U+2002, U+2003)',
           'Thin & Hair Spaces (U+2009, U+200A)',
-          'Runs of three or more spaces',
+          'Runs of three or more spaces between words',
           'Unclosed ``` code fences (reported, not changed)',
         ],
       },
@@ -238,7 +238,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
           'Non-Breaking Spaces (U+00A0, U+202F)',
           'Thin, hair, en, and em spaces (U+2000–U+200A)',
           'Trailing spaces and tabs at line ends',
-          'Runs of three or more spaces',
+          'Runs of three or more spaces between words',
           'Unclosed ``` code fences (reported, not changed)',
         ],
       },
@@ -267,7 +267,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         heading: 'Fixing odd spaces in copied ChatGPT text',
         paragraphs: [
           'A common complaint after pasting a ChatGPT reply is spacing that looks normal but behaves strangely: words that refuse to wrap, double gaps, or search that misses a phrase you can clearly see. Non-breaking spaces and zero-width spaces are the usual reasons.',
-          'The cleaner converts non-breaking and typographic spaces into regular spaces, removes zero-width spaces, and trims trailing spaces at the end of lines. Long runs of spaces are collapsed to one, so check indented code before you paste it back into an editor.',
+          'The cleaner converts non-breaking and typographic spaces into regular spaces, removes zero-width spaces, and trims trailing spaces at the end of lines. Long runs of spaces between words are collapsed to one, while indentation at the start of a line is left alone.',
         ],
       },
       {
@@ -343,7 +343,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       },
       {
         question: 'Does cleaning change the meaning of my text?',
-        answer: 'No. Words, punctuation, emojis, line breaks, and non-Latin scripts stay in place. Only cataloged hidden characters and spacing are changed. Long runs of spaces are collapsed, which can affect indented code.',
+        answer: 'No. Words, punctuation, emojis, line breaks, and non-Latin scripts stay in place. Only cataloged hidden characters and spacing between words are changed; indentation at the start of a line is kept.',
       },
       {
         question: 'Does the tool store my ChatGPT text?',

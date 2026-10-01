@@ -10,7 +10,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: '8 min read',
     publishedDate: '2026-03-12',
     updatedDate: '2026-10-02',
-    author: 'AI Research Team',
+    author: 'AI Watermark Tools',
     category: 'AI Detection & Analysis',
     tags: ['ChatGPT', 'AI Watermarking', 'OpenAI', 'Text Analysis'],
     relatedTools: [
@@ -130,7 +130,7 @@ Treat “ChatGPT watermark” as a bundle of claims, not a single proven charact
     description: 'An in-depth analysis of Anthropic Claude text outputs, formatting artifacts, and invisible character handling.',
     readTime: '5 min read',
     publishedDate: '2026-03-08',
-    author: 'AI Safety & Tooling Group',
+    author: 'AI Watermark Tools',
     category: 'AI Analysis',
     tags: ['Claude', 'Anthropic', 'Text Cleaner', 'Unicode'],
     relatedTools: [
@@ -177,7 +177,7 @@ Meaning-preserving cleanup for any assistant draft is covered in [how to clean A
     description: 'A comprehensive technical guide to zero-width spaces, byte order marks, joiners, and how they sneak into digital text.',
     readTime: '7 min read',
     publishedDate: '2026-02-24',
-    author: 'Unicode Engineering Staff',
+    author: 'AI Watermark Tools',
     category: 'Unicode & Formatting',
     tags: ['Unicode', 'Zero Width', 'Invisible Characters', 'Text Hygiene'],
     relatedTools: [
@@ -228,7 +228,7 @@ This page is a catalog of **what** those characters are. For workflows, see [how
       'Learn what AI text formatting artifacts are — unusual whitespace, markdown leftovers, hidden characters — how they differ from writing style and watermarks, and how to clean them.',
     readTime: '9 min read',
     publishedDate: '2026-02-15',
-    author: 'Content Strategy Desk',
+    author: 'AI Watermark Tools',
     category: 'Content Quality',
     tags: ['AI Artifacts', 'Writing Style', 'Text Normalization'],
     relatedTools: [
@@ -376,7 +376,7 @@ Formatting artifacts are copy-paste and renderer leftovers. Invisible Unicode ch
     description: 'A deep dive into canonical and compatibility decomposition in modern text processing, web browsers, and AI outputs.',
     readTime: '8 min read',
     publishedDate: '2026-02-02',
-    author: 'Systems & Text Architecture',
+    author: 'AI Watermark Tools',
     category: 'Unicode & Formatting',
     tags: ['Unicode', 'NFC', 'NFD', 'Software Engineering', 'Text Analysis'],
     relatedTools: [
@@ -416,7 +416,7 @@ Normalization is a different problem from extra hidden characters. If the paste 
     description: 'Learn how professional editors clean, normalize, and verify AI-assisted writing while maintaining academic integrity and publication standards.',
     readTime: '6 min read',
     publishedDate: '2026-01-20',
-    author: 'Editorial Standards Committee',
+    author: 'AI Watermark Tools',
     category: 'Writing & Ethics',
     tags: ['Ethics', 'Editing', 'AI Writing', 'Text Hygiene'],
     relatedTools: [

@@ -52,6 +52,26 @@ function seoHeadPlugin(): Plugin {
         written++;
       }
       console.log(`[seo-head-prerender] wrote route HTML for ${written} routes (root: ${path.relative(process.cwd(), root) || '.'})`);
+
+      // Vercel: each prerendered route needs an explicit rewrite to its index.html,
+      // placed before the SPA catch-all. Warn when a new route has been added
+      // to SITEMAP_ENTRIES / BLOG_POSTS without a matching vercel.json entry.
+      const vercelPath = path.join(root, 'vercel.json');
+      if (fs.existsSync(vercelPath)) {
+        const vercel = JSON.parse(fs.readFileSync(vercelPath, 'utf8')) as {
+          rewrites?: {source: string; destination: string}[];
+        };
+        const rewrites = new Map((vercel.rewrites ?? []).map((r) => [r.source, r.destination]));
+        const missing = SITEMAP_ENTRIES.filter(
+          (entry) => entry.path !== '/' && rewrites.get(entry.path) !== `${entry.path}/index.html`
+        ).map((entry) => entry.path);
+        if (missing.length > 0) {
+          console.warn(
+            `[seo-head-prerender] WARNING: vercel.json has no rewrite for: ${missing.join(', ')}. ` +
+              'Add {"source": "<path>", "destination": "<path>/index.html"} before the "/(.*)" catch-all.'
+          );
+        }
+      }
     },
   };
 }

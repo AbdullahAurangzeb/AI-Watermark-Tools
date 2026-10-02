@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": false,
   "rewrites": [
     {
       "source": "/sitemap.xml",
@@ -16,6 +17,98 @@
     {
       "source": "/logo.jpg",
       "destination": "/logo.jpg"
+    },
+    {
+      "source": "/og-image.jpg",
+      "destination": "/og-image.jpg"
+    },
+    {
+      "source": "/claude-ai-text-watermark-remover",
+      "destination": "/claude-ai-text-watermark-remover/index.html"
+    },
+    {
+      "source": "/chatgpt-ai-text-watermark-remover",
+      "destination": "/chatgpt-ai-text-watermark-remover/index.html"
+    },
+    {
+      "source": "/ai-text-watermark-remover",
+      "destination": "/ai-text-watermark-remover/index.html"
+    },
+    {
+      "source": "/ai-text-cleaner",
+      "destination": "/ai-text-cleaner/index.html"
+    },
+    {
+      "source": "/invisible-character-remover",
+      "destination": "/invisible-character-remover/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact/index.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy/index.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms/index.html"
+    },
+    {
+      "source": "/disclaimer",
+      "destination": "/disclaimer/index.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/blog/how-to-clean-chatgpt-text",
+      "destination": "/blog/how-to-clean-chatgpt-text/index.html"
+    },
+    {
+      "source": "/blog/how-to-remove-invisible-characters",
+      "destination": "/blog/how-to-remove-invisible-characters/index.html"
+    },
+    {
+      "source": "/blog/zero-width-space-u200b-explained",
+      "destination": "/blog/zero-width-space-u200b-explained/index.html"
+    },
+    {
+      "source": "/blog/how-to-detect-hidden-unicode-characters",
+      "destination": "/blog/how-to-detect-hidden-unicode-characters/index.html"
+    },
+    {
+      "source": "/blog/how-to-clean-ai-generated-text",
+      "destination": "/blog/how-to-clean-ai-generated-text/index.html"
+    },
+    {
+      "source": "/blog/does-chatgpt-watermark-text",
+      "destination": "/blog/does-chatgpt-watermark-text/index.html"
+    },
+    {
+      "source": "/blog/does-claude-watermark-text",
+      "destination": "/blog/does-claude-watermark-text/index.html"
+    },
+    {
+      "source": "/blog/what-are-invisible-unicode-characters",
+      "destination": "/blog/what-are-invisible-unicode-characters/index.html"
+    },
+    {
+      "source": "/blog/ai-text-formatting-artifacts-explained",
+      "destination": "/blog/ai-text-formatting-artifacts-explained/index.html"
+    },
+    {
+      "source": "/blog/unicode-normalization-forms-nfc-nfd-explained",
+      "destination": "/blog/unicode-normalization-forms-nfc-nfd-explained/index.html"
+    },
+    {
+      "source": "/blog/complete-guide-to-safe-ai-text-editing",
+      "destination": "/blog/complete-guide-to-safe-ai-text-editing/index.html"
     },
     {
       "source": "/(.*)",

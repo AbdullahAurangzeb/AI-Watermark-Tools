@@ -70,8 +70,8 @@ export function analyzeText(text: string): TextAnalysis {
     }
   }
 
-  // Detect consecutive space clusters (3 or more spaces in a row)
-  const consecutiveSpaceMatches = text.match(/[ ]{3,}/g);
+  // Detect clusters of 3+ spaces between words (leading indentation is not an issue)
+  const consecutiveSpaceMatches = text.match(/[^ \t\r\n][ ]{3,}(?=[^ \t\r\n])/g);
   if (consecutiveSpaceMatches) {
     whitespaceIssueCount += consecutiveSpaceMatches.length;
   }

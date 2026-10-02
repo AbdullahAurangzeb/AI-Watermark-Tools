@@ -6,6 +6,8 @@ import { Mail, MessageSquare, Check, HelpCircle, Send } from 'lucide-react';
 import { AdPlaceholder } from '../components/ads/AdPlaceholder';
 import { SEOHead } from '../components/seo/SEOHead';
 
+const CONTACT_EMAIL = 'servicesbusiness671@gmail.com';
+
 export function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -18,6 +20,13 @@ export function ContactPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.email || !formData.message) return;
+
+    const subject = encodeURIComponent(`[AI Watermark Tools] ${formData.subject}`);
+    const body = encodeURIComponent(
+      `${formData.message}\n\n---\nFrom: ${formData.name || 'Not provided'} (${formData.email})`
+    );
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+
     setSubmitted(true);
   };
 
@@ -35,6 +44,12 @@ export function ContactPage() {
           <p className="text-base text-slate-600 max-w-xl mx-auto">
             Have questions, feedback, or a feature request regarding our text cleaning algorithms? We'd love to hear from you.
           </p>
+          <p className="text-sm text-slate-500">
+            Prefer email? Reach us directly at{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-indigo-600 font-semibold underline hover:text-indigo-800">
+              {CONTACT_EMAIL}
+            </a>
+          </p>
         </div>
 
         <Card variant="elevated" className="p-6 sm:p-8 bg-white border border-slate-200">
@@ -43,9 +58,10 @@ export function ContactPage() {
               <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto">
                 <Check className="w-6 h-6" />
               </div>
-              <h2 className="text-2xl font-bold text-slate-900">Message Received!</h2>
+              <h2 className="text-2xl font-bold text-slate-900">Your email client should be opening</h2>
               <p className="text-sm text-slate-600 max-w-md mx-auto">
-                Thank you for reaching out. We will review your inquiry and respond as soon as possible.
+                We've pre-filled a message addressed to {CONTACT_EMAIL} with your details. If nothing opened,
+                email us directly at that address and we'll get back to you as soon as possible.
               </p>
               <Button
                 variant="outline"

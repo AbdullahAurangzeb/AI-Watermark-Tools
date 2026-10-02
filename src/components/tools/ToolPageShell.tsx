@@ -8,6 +8,7 @@ import { Badge } from '../ui/Badge';
 import { Card } from '../ui/Card';
 import { Link } from '../../router/RouterContext';
 import { ProviderLogo } from '../ui/BrandLogo';
+import { CleanerReference } from './CleanerReference';
 import { 
   Sparkles, 
   Shield, 
@@ -93,6 +94,28 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
           </span>
         </div>
       </div>
+
+      {/* Plain-language summary of what the tool does, shown before the tool */}
+      {config.introSummary && (
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 mb-8">
+          <section
+            aria-labelledby="tool-intro-heading"
+            className="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/80 space-y-3"
+          >
+            <h2 id="tool-intro-heading" className="text-base sm:text-lg font-bold text-slate-900">
+              {config.introSummary.heading}
+            </h2>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-slate-600">
+              {config.introSummary.points.map((point) => (
+                <li key={point} className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" aria-hidden="true" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      )}
 
       {/* Main Interactive Tool Workspace */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
@@ -190,7 +213,7 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
               },
               {
                 title: 'Deterministic Clean',
-                description: 'Unwanted artifacts are safely purged while keeping linguistic tokens and emojis untouched.',
+                description: 'Cataloged hidden characters are removed and odd spaces normalized, while words and emoji stay untouched.',
               },
               {
                 title: 'Copy & Export',
@@ -239,6 +262,8 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
           </div>
         </section>
 
+        {config.showCleanerReference && <CleanerReference />}
+
         {/* Ad Placement 2: In-Content */}
         <AdPlaceholder slot="in-content" />
 
@@ -254,7 +279,7 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
             <p>
               <strong>What this tool does:</strong>{' '}
               {config.limitations?.does ??
-                'Detects and removes invisible Unicode control characters, zero-width spaces, byte-order marks (BOM), non-breaking spaces (NBSP), and formatting artifacts introduced during generation and clipboard transfer.'}
+                'Detects invisible Unicode characters and unusual whitespace, removes zero-width spaces, word joiners, byte-order marks, and soft hyphens, and converts non-breaking and typographic spaces to normal spaces.'}
             </p>
             <p>
               <strong>What this tool does NOT do:</strong>{' '}
@@ -288,6 +313,7 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
                     onClick={() => toggleFaq(index)}
                     className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 font-semibold text-slate-900 hover:text-indigo-600 focus:outline-none"
                     aria-expanded={isOpen}
+                    aria-controls={`tool-faq-answer-${index}`}
                   >
                     <span className="text-base">{faq.question}</span>
                     <ChevronDown
@@ -296,11 +322,14 @@ export function ToolPageShell({ config }: ToolPageShellProps) {
                       }`}
                     />
                   </button>
-                  {isOpen && (
-                    <div className="px-4 sm:px-5 pb-5 pt-1 text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-                      {faq.answer}
-                    </div>
-                  )}
+                  {/* Answers stay in the DOM (hidden when collapsed) so the visible FAQ matches FAQPage structured data. */}
+                  <div
+                    id={`tool-faq-answer-${index}`}
+                    hidden={!isOpen}
+                    className="px-4 sm:px-5 pb-5 pt-1 text-sm text-slate-600 leading-relaxed border-t border-slate-100"
+                  >
+                    {faq.answer}
+                  </div>
                 </div>
               );
             })}

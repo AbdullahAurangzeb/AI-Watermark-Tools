@@ -454,7 +454,7 @@ export function TextTool({
       <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-100/70 border border-slate-200/80 text-xs text-slate-600">
         <Info className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
         <div>
-          <strong className="text-slate-800 font-semibold">Privacy Guaranteed:</strong> Text entered into the workspace is analyzed and cleaned locally in your browser memory. Optional AI rewriting is proxied securely through our backend without persistent database logging.
+          <strong className="text-slate-800 font-semibold">Privacy Guaranteed:</strong> Text entered into the workspace is analyzed and cleaned locally in your browser memory. The optional AI rewriting feature is in preview (coming soon) and does not yet send any text to a server.
         </div>
       </div>
 

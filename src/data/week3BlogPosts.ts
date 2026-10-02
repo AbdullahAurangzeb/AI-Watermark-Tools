@@ -8,7 +8,7 @@ export const WEEK3_BLOG_POSTS: BlogPost[] = [
       'Learn how to inspect and clean copied ChatGPT text for invisible Unicode characters, zero-width spaces, unusual whitespace, and formatting artifacts without rewriting the words.',
     readTime: '9 min read',
     publishedDate: '2026-09-20',
-    author: 'AI Research Team',
+    author: 'AI Watermark Tools',
     category: 'AI Detection & Analysis',
     tags: ['ChatGPT', 'Text Cleaning', 'Invisible Characters', 'Formatting'],
     relatedTools: [
@@ -193,7 +193,7 @@ It is not a claim that every ChatGPT answer contains a watermark, and it is not 
       'Learn what invisible Unicode characters are, why they appear in copied text, which code points to know, and how to detect and remove them without damaging useful formatting.',
     readTime: '10 min read',
     publishedDate: '2026-09-20',
-    author: 'Unicode Engineering Staff',
+    author: 'AI Watermark Tools',
     category: 'Unicode & Formatting',
     tags: ['Unicode', 'Invisible Characters', 'Zero Width', 'Text Hygiene'],
     relatedTools: [
@@ -377,7 +377,7 @@ Detect them, then remove only what is stray. Use a cataloged cleaner instead of 
       'A beginner-friendly technical guide to U+200B, the Unicode ZERO WIDTH SPACE: why it is invisible, when it is useful, when it is accidental, and how to detect and remove it.',
     readTime: '8 min read',
     publishedDate: '2026-09-20',
-    author: 'Unicode Engineering Staff',
+    author: 'AI Watermark Tools',
     category: 'Unicode & Formatting',
     tags: ['Unicode', 'Zero Width', 'U+200B', 'Invisible Characters'],
     relatedTools: [
@@ -555,7 +555,7 @@ It is not, by definition, an AI watermark. Detect it, then remove it when it is 
       'Learn how to inspect text for hidden Unicode characters, zero-width spaces, and unusual whitespace that copy and paste can preserve, including practical checks you can run yourself.',
     readTime: '9 min read',
     publishedDate: '2026-09-20',
-    author: 'Unicode Engineering Staff',
+    author: 'AI Watermark Tools',
     category: 'Unicode & Formatting',
     tags: ['Unicode', 'Detection', 'Invisible Characters', 'Text Analysis'],
     relatedTools: [
@@ -763,7 +763,7 @@ Hidden Unicode characters are detectable because they are code points. Inspect w
       'Learn the difference between cleaning and rewriting AI-generated text: remove invisible characters and formatting artifacts while preserving the words, names, and sentence meaning.',
     readTime: '8 min read',
     publishedDate: '2026-09-20',
-    author: 'Editorial Standards Committee',
+    author: 'AI Watermark Tools',
     category: 'Writing & Ethics',
     tags: ['Text Cleaning', 'AI Writing', 'Unicode', 'Editing'],
     relatedTools: [

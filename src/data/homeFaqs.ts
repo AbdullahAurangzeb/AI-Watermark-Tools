@@ -9,12 +9,17 @@ export const HOME_FAQS: FAQItem[] = [
   {
     question: 'How do invisible characters get into AI text?',
     answer:
-      'Web interfaces and markdown editors often insert zero-width spaces (U+200B), non-breaking spaces (U+00A0), and related markers for layout or cursor handling. Those characters can remain in the clipboard after you copy from ChatGPT, Claude, or similar tools.',
+      'Web interfaces and markdown editors can insert zero-width spaces (U+200B), non-breaking spaces (U+00A0), and related markers for layout or cursor handling. Those characters can remain in the clipboard after you copy from ChatGPT, Claude, or similar tools. Many copies contain none at all.',
   },
   {
     question: 'Can I clean ChatGPT text and Claude text here?',
     answer:
       'Yes. The homepage workspace can scan general, ChatGPT, Claude, or invisible-character presets. Dedicated pages explain ChatGPT text cleaning and Claude text cleaning in more detail.',
+  },
+  {
+    question: 'Does removing invisible characters remove an AI watermark?',
+    answer:
+      'Not in the statistical sense. Research watermarks are patterns in word choice, not characters, so deleting hidden characters cannot remove them. What these tools remove are supported invisible Unicode characters and spacing artifacts that are actually present in your text.',
   },
   {
     question: 'What are zero-width characters?',

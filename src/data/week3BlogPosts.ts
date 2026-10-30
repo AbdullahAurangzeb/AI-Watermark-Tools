@@ -372,11 +372,12 @@ Detect them, then remove only what is stray. Use a cataloged cleaner instead of 
   },
   {
     slug: 'zero-width-space-u200b-explained',
-    title: 'Zero Width Space (U+200B): What It Is and How to Remove It',
+    title: 'Zero Width Space (U+200B, \\u200b): What It Is and How to Remove It',
     description:
       'A beginner-friendly technical guide to U+200B, the Unicode ZERO WIDTH SPACE: why it is invisible, when it is useful, when it is accidental, and how to detect and remove it.',
     readTime: '8 min read',
     publishedDate: '2026-09-20',
+    updatedDate: '2026-10-30',
     author: 'AI Watermark Tools',
     category: 'Unicode & Formatting',
     tags: ['Unicode', 'Zero Width', 'U+200B', 'Invisible Characters'],
@@ -418,6 +419,21 @@ Detect them, then remove only what is stray. Use a cataloged cleaner instead of 
         answer:
           'Detect them first, then delete U+200B from the string. The Invisible Character Remover on this site reports and removes cataloged zero-width spaces in pasted text. This does not rewrite the surrounding words.',
       },
+      {
+        question: 'What is \\u200b?',
+        answer:
+          '\\u200b is the escape sequence for U+200B ZERO WIDTH SPACE in JavaScript, JSON, Java, Python and similar languages. In HTML the same character is written &#x200B; or &#8203;, and in a URL it appears as %E2%80%8B.',
+      },
+      {
+        question: 'What does &#x200B; mean?',
+        answer:
+          '&#x200B; is the HTML entity for a zero width space. Browsers render it as nothing. If you see the literal text &#x200B;, it was copied from an editor that used it to hold an empty line and pasted somewhere that does not decode HTML entities; it can be deleted.',
+      },
+      {
+        question: 'How do I remove zero-width spaces in Python or Word?',
+        answer:
+          'In Python, use text.replace("\\u200b", ""). In Microsoft Word, open Find and Replace, search for ^u8203, leave the replacement empty, and choose Replace All.',
+      },
     ],
     content: `
 ## Direct answer
@@ -452,6 +468,26 @@ Nearby characters that people confuse with it:
 * **U+FEFF** ZERO WIDTH NO-BREAK SPACE / BOM
 
 A broader list is in the [invisible Unicode characters guide](/blog/what-are-invisible-unicode-characters).
+
+## U+200B in code, HTML and URLs (\\u200b, &#x200B;, %E2%80%8B)
+
+The same character is written differently depending on where you see it. If you searched for one of these, they all mean ZERO WIDTH SPACE:
+
+| Where you see it | How it is written |
+| --- | --- |
+| Unicode notation | \`U+200B\` |
+| JavaScript, JSON, Java, Python, C# | \`\\u200B\` (also \`\\u200b\`) |
+| HTML hex entity | \`&#x200B;\` |
+| HTML decimal entity | \`&#8203;\` |
+| HTML named entity | \`&ZeroWidthSpace;\` |
+| CSS content | \`\\200B\` |
+| URL-encoded (UTF-8) | \`%E2%80%8B\` |
+| UTF-8 bytes | \`E2 80 8B\` |
+| UTF-16 code unit | \`0x200B\` |
+
+**Why you might see “&#x200B;” as literal text:** some editors, Reddit's among them, have inserted \`&#x200B;\` to hold an empty paragraph open. When that text is copied somewhere that does not decode HTML entities, the entity shows up as visible characters instead of an invisible space. Delete it like any other stray text.
+
+**Why “200b” shows up in searches:** code-point inspectors and error messages often print the bare hex value, so \`200b\`, \`u200b\` and \`u 200b\` all refer to the same character.
 
 ## Why it is invisible
 
@@ -538,6 +574,14 @@ For plain-language drafts where wrap hints are not needed:
 The [Invisible Character Remover](/invisible-character-remover) removes cataloged zero-width spaces from pasted text. The [AI Text Cleaner](/ai-text-cleaner) does the same as part of a broader whitespace cleanup.
 
 Do not confuse this with deleting **all** zero-width characters. [How to remove invisible characters](/blog/how-to-remove-invisible-characters) covers joiners that you may need to keep.
+
+### Remove zero-width spaces in code and editors
+
+* **JavaScript:** \`text.replace(/\\u200B/g, '')\`
+* **Python:** \`text.replace('\\u200b', '')\`
+* **Several zero-width characters at once (regex):** \`[\\u200B\\u2060\\uFEFF]\` matches the zero width space, word joiner and BOM; replace matches with an empty string. Leave U+200C and U+200D out unless you are sure the text has no emoji or joining scripts.
+* **Microsoft Word:** open Find and Replace, search for \`^u8203\` (the decimal code for U+200B), leave Replace empty, and choose Replace All.
+* **VS Code:** invisible Unicode characters are highlighted by default. Use Find with regex enabled and search for \`\\u200B\` to select every occurrence.
 
 If you *want* break opportunities in a long URL, you might keep U+200B in that URL only. Cleaning tools on this site are aimed at stray artifacts in prose, not at designing typography.
 

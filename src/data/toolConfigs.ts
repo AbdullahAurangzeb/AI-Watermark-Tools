@@ -353,6 +353,14 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         question: 'Will this make ChatGPT text undetectable?',
         answer: 'No. We do not claim detector bypass, “humanization,” or guaranteed removal of an AI watermark. This is a text-hygiene tool.',
       },
+      {
+        question: 'Does it remove the odd spaces in ChatGPT text?',
+        answer: 'Yes. It converts narrow no-break spaces (U+202F) and non-breaking spaces (U+00A0), which can appear in copied ChatGPT replies, into normal spaces, and removes zero-width spaces (U+200B). Runs of extra spaces are collapsed and trailing spaces are trimmed.',
+      },
+      {
+        question: 'Is this ChatGPT text cleaner free?',
+        answer: 'Yes. It is free to use, needs no sign-up, and runs in your browser.',
+      },
     ],
   },
 
@@ -692,6 +700,14 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         question: 'Is this an AI paraphraser or AI scrubber?',
         answer: 'No. The cleaner does not paraphrase or “humanize” text, and it does not promise any AI-detector result. Optional rewriting is a separate, opt-in feature and is not required for cleaning.',
       },
+      {
+        question: 'Is this AI text cleaner free?',
+        answer: 'Yes. The AI text cleaner is free, needs no account, and runs in your browser.',
+      },
+      {
+        question: 'Does it work with Gemini, Copilot, and other AI tools?',
+        answer: 'Yes. The cleaner works on characters, not on a specific model, so it cleans text copied from any AI assistant, document, or web page.',
+      },
     ],
   },
 
@@ -882,6 +898,14 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       {
         question: 'Does the tool store my text?',
         answer: 'Scanning and cleaning run in your browser. Pasted text is not stored in a database.',
+      },
+      {
+        question: 'How do I remove invisible characters from AI text?',
+        answer: 'Paste the text into the box above. The tool lists each hidden character it finds by name and count, then removes zero-width spaces, word joiners, byte order marks, and soft hyphens and converts no-break spaces to normal spaces. Copy the cleaned text back out.',
+      },
+      {
+        question: 'Can I remove invisible characters online without installing anything?',
+        answer: 'Yes. This invisible character remover works in any modern browser on desktop or mobile. There is nothing to install and no sign-up.',
       },
     ],
   },

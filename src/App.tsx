@@ -84,9 +84,9 @@ function PageRouter() {
   );
 }
 
-export default function App() {
+export default function App({ initialPath }: { initialPath?: string }) {
   return (
-    <RouterProvider>
+    <RouterProvider initialPath={initialPath}>
       <AppLayout>
         <PageRouter />
       </AppLayout>

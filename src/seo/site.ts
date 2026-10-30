@@ -34,6 +34,8 @@ export interface SitemapEntry {
   path: string;
   priority: string;
   changefreq: SitemapChangefreq;
+  /** ISO date of the last real content change. Omitted when unknown rather than faked. */
+  lastmod?: string;
 }
 
 /**
@@ -62,6 +64,7 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
     path: `/blog/${post.slug}`,
     priority: '0.7',
     changefreq: 'monthly',
+    lastmod: post.updatedDate ?? post.publishedDate,
   })),
 ];
 
@@ -108,7 +111,7 @@ export function getPublicSiteUrl(_envUrl?: string): string {
   return SITE_URL;
 }
 
-export function buildSitemapXml(host: string = SITE_URL, lastmod?: string): string {
+export function buildSitemapXml(host: string = SITE_URL): string {
   const origin = host.replace(/\/+$/, '');
   const loc = (path: string) => `${origin}${path === '/' ? '/' : path}`;
 
@@ -116,7 +119,7 @@ export function buildSitemapXml(host: string = SITE_URL, lastmod?: string): stri
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${SITEMAP_ENTRIES.map(
     (route) => `  <url>
-    <loc>${loc(route.path)}</loc>${lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ''}
+    <loc>${loc(route.path)}</loc>${route.lastmod ? `\n    <lastmod>${route.lastmod}</lastmod>` : ''}
     <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority}</priority>
   </url>`
@@ -124,12 +127,39 @@ ${SITEMAP_ENTRIES.map(
 </urlset>`;
 }
 
+/**
+ * Search and AI answer-engine crawlers named explicitly so the site stays
+ * eligible for citation in ChatGPT, Claude, Perplexity, Gemini, Copilot and
+ * Apple Intelligence even if a CDN or host default ever turns restrictive.
+ */
+const NAMED_CRAWLERS = [
+  'Googlebot',
+  'Bingbot',
+  'Google-Extended',
+  'GPTBot',
+  'OAI-SearchBot',
+  'ChatGPT-User',
+  'ClaudeBot',
+  'Claude-SearchBot',
+  'Claude-User',
+  'PerplexityBot',
+  'Perplexity-User',
+  'Applebot',
+  'Applebot-Extended',
+  'DuckAssistBot',
+  'CCBot',
+];
+
 export function buildRobotsTxt(host: string = SITE_URL): string {
   const origin = host.replace(/\/+$/, '');
-  return `User-agent: *
+  return `# Search engines and AI answer engines are welcome to crawl and cite this site.
+User-agent: *
+${NAMED_CRAWLERS.map((bot) => `User-agent: ${bot}`).join('\n')}
 Allow: /
 Disallow: /api/
 
 Sitemap: ${origin}/sitemap.xml
+
+# Plain-text site summary for LLMs: ${origin}/llms.txt
 `;
 }

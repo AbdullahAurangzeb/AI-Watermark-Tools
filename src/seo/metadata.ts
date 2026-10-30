@@ -207,16 +207,30 @@ const BLOG_SEO: Record<string, PageSeoConfig> = {
   },
 };
 
+/** Topics the site covers; helps search and answer engines resolve the entity. */
+const SITE_TOPICS = [
+  'Invisible Unicode characters',
+  'Zero-width space',
+  'Non-breaking space',
+  'Byte order mark',
+  'Unicode normalization',
+  'AI-generated text',
+  'Text cleaning',
+];
+
 function organizationLd(): JsonLd {
   return {
     '@type': 'Organization',
     '@id': `${SITE_URL}/#organization`,
     name: SITE_NAME,
     url: `${SITE_URL}/`,
+    description:
+      'Free browser-based tools and guides for finding and removing invisible Unicode characters and formatting artifacts from AI-generated text.',
     logo: {
       '@type': 'ImageObject',
       url: SITE_LOGO_URL,
     },
+    knowsAbout: SITE_TOPICS,
   };
 }
 
@@ -227,18 +241,29 @@ function websiteLd(description: string): JsonLd {
     name: SITE_NAME,
     url: `${SITE_URL}/`,
     description,
+    inLanguage: 'en',
     publisher: { '@id': `${SITE_URL}/#organization` },
   };
 }
 
-function softwareApplicationLd(name: string, description: string, url: string): JsonLd {
+function softwareApplicationLd(
+  name: string,
+  description: string,
+  url: string,
+  featureList?: string[]
+): JsonLd {
   return {
-    '@type': 'SoftwareApplication',
+    '@type': 'WebApplication',
+    '@id': `${url}#app`,
     name,
     applicationCategory: 'UtilitiesApplication',
     operatingSystem: 'Any',
+    browserRequirements: 'Requires JavaScript. Runs in any modern web browser.',
     url,
     description,
+    isAccessibleForFree: true,
+    inLanguage: 'en',
+    ...(featureList && featureList.length > 0 ? { featureList } : {}),
     offers: {
       '@type': 'Offer',
       price: '0',
@@ -280,6 +305,7 @@ function webPageLd(name: string, description: string, url: string): JsonLd {
     name,
     description,
     url,
+    inLanguage: 'en',
     isPartOf: { '@id': `${SITE_URL}/#website` },
   };
 }
@@ -291,7 +317,11 @@ function blogPostingLd(post: BlogPost, url: string, seoDescription: string): Jso
     description: seoDescription,
     url,
     datePublished: post.publishedDate,
-    ...(post.updatedDate ? { dateModified: post.updatedDate } : {}),
+    dateModified: post.updatedDate ?? post.publishedDate,
+    inLanguage: 'en',
+    articleSection: post.category,
+    keywords: post.tags.join(', '),
+    isPartOf: { '@type': 'Blog', '@id': `${SITE_URL}/blog#blog` },
     image: SITE_OG_IMAGE_URL,
     author: {
       '@type': 'Organization',
@@ -394,7 +424,12 @@ function structuredDataForPath(
   if (tool) {
     return [
       organizationLd(),
-      softwareApplicationLd(tool.name, config.description, url),
+      softwareApplicationLd(
+        tool.name,
+        config.description,
+        url,
+        tool.features.map((feature) => feature.title)
+      ),
       faqPageLd(tool.faqs),
       breadcrumbLd(breadcrumbs),
     ];
@@ -405,7 +440,9 @@ function structuredDataForPath(
       organizationLd(),
       {
         '@type': 'Blog',
+        '@id': `${SITE_URL}/blog#blog`,
         name: 'AI Text & Unicode Guides',
+        inLanguage: 'en',
         description: config.description,
         url,
         publisher: { '@id': `${SITE_URL}/#organization` },

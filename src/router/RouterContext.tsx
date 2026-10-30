@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
 
 interface RouterContextType {
   currentPath: string;
@@ -42,9 +42,11 @@ function getInitialPath(): string {
   return '/';
 }
 
-export function RouterProvider({ children }: { children: ReactNode }) {
-  const [currentPath, setCurrentPath] = useState<string>(getInitialPath);
-  const [params, setParams] = useState<Record<string, string>>({});
+export function RouterProvider({ children, initialPath }: { children: ReactNode; initialPath?: string }) {
+  // initialPath is set during build-time prerendering, where there is no window.
+  const [currentPath, setCurrentPath] = useState<string>(() =>
+    initialPath !== undefined ? normalizePath(initialPath) : getInitialPath()
+  );
 
   useEffect(() => {
     const handleLocationChange = () => {
@@ -70,15 +72,12 @@ export function RouterProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  // Update dynamic route parameters when path changes
-  useEffect(() => {
-    if (currentPath.startsWith('/blog/')) {
-      const slug = currentPath.replace('/blog/', '');
-      setParams({ slug });
-    } else {
-      setParams({});
-    }
-  }, [currentPath]);
+  // Derived during render (not in an effect) so the first render, including
+  // the build-time prerender, already has the blog slug.
+  const params = useMemo<Record<string, string>>(
+    () => (currentPath.startsWith('/blog/') ? { slug: currentPath.replace('/blog/', '') } : {}),
+    [currentPath]
+  );
 
   const navigate = (to: string, replace = false) => {
     const normalized = normalizePath(to);

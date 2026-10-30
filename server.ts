@@ -4,6 +4,7 @@ import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import dotenv from 'dotenv';
 import { buildRobotsTxt, buildSitemapXml, getPublicSiteUrl } from './src/seo/site';
+import { buildLlmsTxt } from './src/seo/llms';
 
 dotenv.config();
 
@@ -60,11 +61,10 @@ app.post('/api/rewrite', async (_req: Request, res: Response) => {
 
 app.get('/sitemap.xml', (_req: Request, res: Response) => {
   const host = getPublicSiteUrl(process.env.APP_URL);
-  const today = new Date().toISOString().split('T')[0];
 
   res.status(200);
   res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-  res.send(buildSitemapXml(host, today));
+  res.send(buildSitemapXml(host));
 });
 
 // ----------------------------------------------------
@@ -77,6 +77,16 @@ app.get('/robots.txt', (_req: Request, res: Response) => {
   res.status(200);
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
   res.send(buildRobotsTxt(host));
+});
+
+// ----------------------------------------------------
+// llms.txt
+// ----------------------------------------------------
+
+app.get('/llms.txt', (_req: Request, res: Response) => {
+  res.status(200);
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.send(buildLlmsTxt());
 });
 
 // ----------------------------------------------------
@@ -141,7 +151,8 @@ async function start() {
       // These are handled explicitly above
       if (
         req.path === '/sitemap.xml' ||
-        req.path === '/robots.txt'
+        req.path === '/robots.txt' ||
+        req.path === '/llms.txt'
       ) {
         return next();
       }

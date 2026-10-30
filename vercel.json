@@ -15,6 +15,10 @@
       "destination": "/ads.txt"
     },
     {
+      "source": "/llms.txt",
+      "destination": "/llms.txt"
+    },
+    {
       "source": "/favicon.ico",
       "destination": "/favicon.ico"
     },

@@ -115,12 +115,15 @@ export function cleanText(
       });
     }
 
-    // Collapse multiple consecutive spaces (3 or more) to a clean double or single space
-    const multiSpaceRegex = /[ ]{3,}/g;
+    // Collapse runs of 3+ spaces between words to a single space.
+    // Leading indentation (spaces at the start of a line) is preserved so code,
+    // nested lists, and indented blocks keep their structure. Runs at the end of
+    // a line are handled by the trailing-whitespace step below.
+    const multiSpaceRegex = /([^ \t\r\n])[ ]{3,}(?=[^ \t\r\n])/g;
     let multiSpaceMatches = 0;
-    result = result.replace(multiSpaceRegex, (match) => {
-      multiSpaceMatches += match.length - 1;
-      return ' ';
+    result = result.replace(multiSpaceRegex, (match, before: string) => {
+      multiSpaceMatches += match.length - before.length - 1;
+      return `${before} `;
     });
     if (multiSpaceMatches > 0) {
       changes.push({

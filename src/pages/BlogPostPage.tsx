@@ -72,8 +72,18 @@ export function BlogPostPage() {
             <span>•</span>
             <span className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 text-slate-400" />
-              <span>{post.publishedDate}</span>
+              <span>
+                Published <time dateTime={post.publishedDate}>{post.publishedDate}</time>
+              </span>
             </span>
+            {post.updatedDate && post.updatedDate !== post.publishedDate && (
+              <>
+                <span>•</span>
+                <span>
+                  Updated <time dateTime={post.updatedDate}>{post.updatedDate}</time>
+                </span>
+              </>
+            )}
             <span>•</span>
             <span className="flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-slate-400" />
@@ -136,15 +146,14 @@ export function BlogPostPage() {
                       onClick={() => setOpenFaqIndex(isOpen ? null : index)}
                       className="w-full text-left p-4 flex items-center justify-between gap-4 font-semibold text-slate-900 hover:text-indigo-600"
                       aria-expanded={isOpen}
+                      aria-controls={`post-faq-answer-${index}`}
                     >
                       <span className="text-sm sm:text-base">{faq.question}</span>
                       <ChevronDown className={`w-5 h-5 text-slate-400 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                     </button>
-                    {isOpen && (
-                      <div className="px-4 pb-4 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
-                        {faq.answer}
-                      </div>
-                    )}
+                    <div id={`post-faq-answer-${index}`} hidden={!isOpen} className="px-4 pb-4 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                      {faq.answer}
+                    </div>
                   </div>
                 );
               })}

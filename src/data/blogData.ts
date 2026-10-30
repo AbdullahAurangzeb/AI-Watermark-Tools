@@ -9,7 +9,8 @@ export const BLOG_POSTS: BlogPost[] = [
     description: 'Explore how OpenAI generates text, the reality of statistical vs Unicode watermarking, and what artifacts may actually be present in copied text.',
     readTime: '8 min read',
     publishedDate: '2026-03-12',
-    author: 'AI Research Team',
+    updatedDate: '2026-10-02',
+    author: 'AI Watermark Tools',
     category: 'AI Detection & Analysis',
     tags: ['ChatGPT', 'AI Watermarking', 'OpenAI', 'Text Analysis'],
     relatedTools: [
@@ -32,47 +33,65 @@ export const BLOG_POSTS: BlogPost[] = [
     relatedArticles: [
       { slug: 'how-to-clean-chatgpt-text', title: 'How to clean ChatGPT text' },
       { slug: 'how-to-detect-hidden-unicode-characters', title: 'How to detect hidden Unicode characters' },
+      { slug: 'ai-text-formatting-artifacts-explained', title: 'AI text formatting artifacts explained' },
     ],
     faqs: [
       {
         question: 'Does ChatGPT watermark text?',
-        answer: 'OpenAI has researched statistical watermarking, which would be a pattern in word choice, not a hidden character. Copied ChatGPT text can still contain ordinary invisible Unicode characters and formatting artifacts from the web interface. Those are not proof of a cryptographic watermark.',
+        answer: 'OpenAI has researched statistical watermarking, which would be a pattern in word choice, not a hidden character. This site cannot verify whether any particular ChatGPT reply carries such a pattern. Copied ChatGPT text can contain ordinary invisible Unicode characters and formatting artifacts, but those are not proof of a watermark.',
+      },
+      {
+        question: 'Does ChatGPT leave a watermark when you copy and paste?',
+        answer: 'Copying can carry extra characters along with the text, such as non-breaking spaces or the occasional zero-width space, depending on the browser, the page, and where you paste. Those are copy-paste artifacts you can inspect and clean. They are not the same as a statistical watermark, and their presence or absence does not tell you whether a reply was watermarked.',
       },
       {
         question: 'Is a ChatGPT watermark the same as invisible characters?',
-        answer: 'No. Invisible characters such as zero-width spaces are real code points you can detect in a string. A statistical watermark, if used, would not be removed by deleting those characters.',
+        answer: 'No. Invisible characters such as zero-width spaces are real code points you can detect in a string. A statistical watermark, if used, would live in which words were chosen, so deleting hidden characters would not remove it.',
+      },
+      {
+        question: 'Will removing invisible characters stop AI detectors from flagging ChatGPT text?',
+        answer: 'No. AI detectors are separate classifiers that score writing patterns. Removing hidden characters is text hygiene; it does not change the wording those tools analyze, and no cleaner can promise a detector result.',
       },
       {
         question: 'Can I clean ChatGPT text without changing its meaning?',
-        answer: 'Yes. A deterministic cleaner can remove cataloged hidden characters and abnormal whitespace while leaving the wording intact.',
+        answer: 'Yes. A character-level cleaner can remove cataloged hidden characters and normalize odd spaces while leaving the wording intact.',
       },
     ],
     content: `
 ## Direct answer
 
-**Does ChatGPT watermark text?** OpenAI has researched statistical watermarking — a possible bias in which tokens a model prefers — but that is not the same thing as hiding a tracking code inside copied characters. This article does not claim that standard ChatGPT web replies contain a secret invisible watermark in every response.
+**Does ChatGPT watermark text?** OpenAI has researched statistical watermarking — a possible bias in which tokens a model prefers — but that is not the same thing as hiding a tracking code inside copied characters. This article does not claim that standard ChatGPT replies contain a detectable watermark in every response, and no tool on this site can confirm or rule out a statistical watermark.
 
-What people often find after copying ChatGPT text is more ordinary: **invisible Unicode characters**, **zero-width spaces**, **non-breaking spaces**, and **formatting artifacts** from the chat interface. Those are text artifacts you can inspect. They are not proof that a statistical watermark is present.
+What people often find after copying ChatGPT text is more ordinary: **invisible Unicode characters**, **zero-width spaces**, **non-breaking spaces**, and **formatting artifacts** from the chat interface. Certain copied text can contain these; plenty of copied text contains none. They are text artifacts you can inspect, not proof that a watermark is present.
 
-If you want to inspect a paste, use the [ChatGPT watermark remover](/chatgpt-ai-text-watermark-remover) or the [invisible character remover](/invisible-character-remover).
+If you want to inspect a paste, run it through the [ChatGPT text cleaner](/chatgpt-ai-text-watermark-remover) or a focused [scan for hidden Unicode characters](/invisible-character-remover).
 
-## What people mean by “ChatGPT watermark”
+## Four things people mean by “ChatGPT watermark”
 
-The phrase covers several different searches:
+Searches such as “ChatGPT watermark,” “does ChatGPT leave watermarks,” and “ChatGPT watermark remover” usually mix four different ideas:
 
-* **ChatGPT watermark:** a suspicion that output is marked so it can be identified later
-* **ChatGPT watermark remover:** a request to strip something hidden from copied text
-* **Clean ChatGPT text:** a practical need to make pasted text behave like normal plain text
+| Idea | What it is | Can you see it in the string? | Does cleaning change it? |
+| --- | --- | --- | --- |
+| **Statistical watermark** | A possible pattern in word choice, detectable only with the right key | No | No |
+| **Invisible Unicode characters** | Extra code points such as U+200B or U+FEFF | Yes, with an inspector | Supported characters can be removed |
+| **Formatting / copy-paste artifacts** | Non-breaking spaces, odd spacing, markdown leftovers | Yes, with an inspector | Spacing can be normalized |
+| **AI detection** | A separate classifier that estimates whether text looks machine-written | Not a property of the text | No |
 
-Those intents overlap in Google, but they are not one technical mechanism. Mixing them leads to tools that over-promise “undetectable” writing.
+Keeping these apart is the easiest way to avoid tools that promise “undetectable” writing.
 
 ## Statistical watermarking is not a hidden character
 
-In research papers, a text watermark is often **statistical**. The model slightly prefers some words over others according to a secret pattern. The resulting paragraph still looks like normal language. There is no extra U+200B you can delete to undo that pattern.
+In research papers, a text watermark is often **statistical**. The model slightly prefers some words over others according to a secret pattern. The resulting paragraph still looks like normal language. There is no extra U+200B you can delete to undo that pattern, and checking for it requires the key held by whoever applied it.
 
-Invisible Unicode characters are different. They are extra code points in the string. A [guide to invisible Unicode characters](/blog/what-are-invisible-unicode-characters) covers zero-width spaces, joiners, and byte-order marks.
+Invisible Unicode characters are different. They are extra code points in the string. The [guide to invisible Unicode characters](/blog/what-are-invisible-unicode-characters) covers zero-width spaces, joiners, and byte-order marks.
 
-Cleaning copy-paste artifacts does **not** equal removing a statistical watermark, and it does **not** make text undetectable to AI classifiers.
+Cleaning copy-paste artifacts does **not** establish or remove a statistical watermark.
+
+## Does ChatGPT leave a watermark when you copy and paste?
+
+Copy and paste can carry more than the visible letters. Depending on the browser, the page, and the app you paste into, the clipboard may include rich-text formatting, non-breaking spaces, or occasionally zero-width characters. Pasting as plain text drops most rich formatting but keeps any special characters that are part of the text itself.
+
+So a “ChatGPT copy and paste watermark” is usually one of two things: ordinary formatting that came along with the copy, or nothing at all. If you want to know what is actually in a specific paste, inspect it rather than assume.
 
 ## Text artifacts that show up in copied ChatGPT text
 
@@ -83,23 +102,26 @@ When you copy from a browser chat UI, the clipboard may include:
 * **Soft hyphens and BOM markers** from rendering or encoding
 * **Markdown remnants** such as stray backticks or extra indentation
 
-These issues are why people look for a ChatGPT text cleaner. They can break search, inflate character counts, or look wrong in a code editor.
+These issues are why people look for a ChatGPT text cleaner. They can break search, inflate character counts, or look wrong in a code editor. The broader picture is covered in [AI text formatting artifacts explained](/blog/ai-text-formatting-artifacts-explained).
+
+## Watermarks are not the same as AI detection
+
+AI detectors are separate products that score writing patterns such as predictability and sentence variation. They do not need a watermark to produce a score, and a watermark (if one exists) is not what most detectors read. Removing hidden characters does not change the wording a detector analyzes, so it should not be expected to change a detector result.
 
 ## How to inspect and clean ChatGPT text
 
 1. Paste the reply into the [ChatGPT text cleaner](/chatgpt-ai-text-watermark-remover).
 2. Check whether invisible characters or unusual whitespace were found.
-3. Clean cataloged artifacts without rewriting the sentences.
+3. Clean supported artifacts without rewriting the sentences.
 4. If you only care about hidden code points, use the [invisible character remover](/invisible-character-remover).
-5. For general formatting cleanup, use the [AI text cleaner](/ai-text-cleaner).
 
-For a step-by-step cleaning walkthrough, see [how to clean ChatGPT text](/blog/how-to-clean-chatgpt-text).
+For a full walkthrough, including what to check after cleaning, see [how to clean ChatGPT text](/blog/how-to-clean-chatgpt-text).
 
 None of these steps is a detector bypass. They are text hygiene.
 
 ## Bottom line
 
-Treat “ChatGPT watermark” as a bundle of claims, not a single proven character in every paste. Distinguish **watermark research**, **invisible Unicode characters**, and **formatting artifacts**. Inspect the text you actually have, and clean only what is there.
+Treat “ChatGPT watermark” as a bundle of claims, not a single proven character in every paste. Distinguish **watermark research**, **invisible Unicode characters**, **formatting artifacts**, and **AI detection**. Inspect the text you actually have, and clean only what is there.
     `,
   },
   {
@@ -108,7 +130,7 @@ Treat “ChatGPT watermark” as a bundle of claims, not a single proven charact
     description: 'An in-depth analysis of Anthropic Claude text outputs, formatting artifacts, and invisible character handling.',
     readTime: '5 min read',
     publishedDate: '2026-03-08',
-    author: 'AI Safety & Tooling Group',
+    author: 'AI Watermark Tools',
     category: 'AI Analysis',
     tags: ['Claude', 'Anthropic', 'Text Cleaner', 'Unicode'],
     relatedTools: [
@@ -155,7 +177,7 @@ Meaning-preserving cleanup for any assistant draft is covered in [how to clean A
     description: 'A comprehensive technical guide to zero-width spaces, byte order marks, joiners, and how they sneak into digital text.',
     readTime: '7 min read',
     publishedDate: '2026-02-24',
-    author: 'Unicode Engineering Staff',
+    author: 'AI Watermark Tools',
     category: 'Unicode & Formatting',
     tags: ['Unicode', 'Zero Width', 'Invisible Characters', 'Text Hygiene'],
     relatedTools: [
@@ -206,7 +228,7 @@ This page is a catalog of **what** those characters are. For workflows, see [how
       'Learn what AI text formatting artifacts are — unusual whitespace, markdown leftovers, hidden characters — how they differ from writing style and watermarks, and how to clean them.',
     readTime: '9 min read',
     publishedDate: '2026-02-15',
-    author: 'Content Strategy Desk',
+    author: 'AI Watermark Tools',
     category: 'Content Quality',
     tags: ['AI Artifacts', 'Writing Style', 'Text Normalization'],
     relatedTools: [
@@ -354,7 +376,7 @@ Formatting artifacts are copy-paste and renderer leftovers. Invisible Unicode ch
     description: 'A deep dive into canonical and compatibility decomposition in modern text processing, web browsers, and AI outputs.',
     readTime: '8 min read',
     publishedDate: '2026-02-02',
-    author: 'Systems & Text Architecture',
+    author: 'AI Watermark Tools',
     category: 'Unicode & Formatting',
     tags: ['Unicode', 'NFC', 'NFD', 'Software Engineering', 'Text Analysis'],
     relatedTools: [
@@ -394,7 +416,7 @@ Normalization is a different problem from extra hidden characters. If the paste 
     description: 'Learn how professional editors clean, normalize, and verify AI-assisted writing while maintaining academic integrity and publication standards.',
     readTime: '6 min read',
     publishedDate: '2026-01-20',
-    author: 'Editorial Standards Committee',
+    author: 'AI Watermark Tools',
     category: 'Writing & Ethics',
     tags: ['Ethics', 'Editing', 'AI Writing', 'Text Hygiene'],
     relatedTools: [

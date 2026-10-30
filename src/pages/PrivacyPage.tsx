@@ -53,14 +53,14 @@ export function PrivacyPage() {
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm text-slate-600">
               <li><strong>Local Cleaning & Analysis:</strong> Executed strictly in browser RAM via JavaScript string evaluation. When you close the tab, all clipboard and input data is cleared immediately.</li>
-              <li><strong>Optional AI Rewriting:</strong> If you explicitly choose to invoke optional AI rewriting, only the selected snippet is sent to the configured AI API proxy to generate the revision, and is not retained for model training.</li>
+              <li><strong>Optional AI Rewriting (Coming Soon):</strong> An opt-in AI rewriting feature is in preview and not yet active. Once launched, this section will be updated to describe exactly what is sent to the rewriting service and how it is handled.</li>
             </ul>
           </div>
 
           <div className="space-y-3">
             <h2 className="text-xl font-bold text-slate-900">3. Google AdSense, Cookies & Third-Party Advertising</h2>
             <p>
-              We use third-party advertising companies, specifically <strong>Google AdSense</strong> and Google Ad Manager, to serve advertisements when you visit our website. These companies may use cookies, web beacons, and similar technologies to collect non-personally identifiable information (such as your IP address, browser type, referring pages, and interaction data) to serve personalized and non-personalized advertisements based on your prior visits to this website and other websites across the internet.
+              This website participates in the <strong>Google AdSense</strong> program. If and when advertisements are displayed on this site, Google and its advertising partners may use cookies, web beacons, and similar technologies to collect non-personally identifiable information (such as your IP address, browser type, referring pages, and interaction data) to serve personalized and non-personalized advertisements based on your prior visits to this website and other websites across the internet. This section describes how that advertising works wherever it is active on the site; it does not imply that every page currently displays an ad.
             </p>
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-2">
               <p className="font-semibold text-slate-900">Important Disclosures regarding Google Advertising Policies:</p>
@@ -99,7 +99,7 @@ export function PrivacyPage() {
           <div className="space-y-3">
             <h2 className="text-xl font-bold text-slate-900">7. Contact Regarding Privacy</h2>
             <p>
-              If you have any questions, concerns, or data inquiries regarding this Privacy Policy, please reach out via our contact page or email us directly at <strong>contact@aiwatermarktools.com</strong>.
+              If you have any questions, concerns, or data inquiries regarding this Privacy Policy, please reach out via our contact page or email us directly at <strong>servicesbusiness671@gmail.com</strong>.
             </p>
           </div>
 

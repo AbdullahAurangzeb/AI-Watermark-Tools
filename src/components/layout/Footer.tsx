@@ -25,7 +25,7 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-indigo-600" />
-                <span>Zero Data Retention</span>
+                <span>Input Text Never Stored</span>
               </div>
             </div>
           </div>

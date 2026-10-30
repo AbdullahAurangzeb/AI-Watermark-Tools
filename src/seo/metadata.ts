@@ -129,9 +129,9 @@ const PAGE_SEO: Record<string, PageSeoConfig> = {
 
 const BLOG_SEO: Record<string, PageSeoConfig> = {
   'does-chatgpt-watermark-text': {
-    title: 'Does ChatGPT Watermark Text? Watermarks vs Hidden Characters',
+    title: 'Does ChatGPT Leave a Watermark When You Copy and Paste?',
     description:
-      'Does ChatGPT leave a watermark in copied text? How statistical watermarking differs from hidden Unicode characters, copy-paste artifacts, and AI detection.',
+      'Does ChatGPT watermark text? What OpenAI has said, which hidden characters (U+202F, U+200B) show up when you copy and paste, images vs text, and how to check.',
     ogType: 'article',
     breadcrumbName: 'Does ChatGPT Watermark Text?',
   },
@@ -157,9 +157,9 @@ const BLOG_SEO: Record<string, PageSeoConfig> = {
     breadcrumbName: 'AI Text Formatting Artifacts Explained',
   },
   'unicode-normalization-forms-nfc-nfd-explained': {
-    title: 'Unicode Normalization Explained: NFC vs NFD',
+    title: 'Unicode Normalization: NFC vs NFD vs NFKC vs NFKD Explained',
     description:
-      'Learn how Unicode normalization works, including NFC and NFD, why normalization matters for text processing, and how Unicode characters can affect copied text.',
+      'NFC, NFD, NFKC and NFKD compared with examples. How to convert NFD to NFC in JavaScript and Python, when NFKC normalization helps, and what it cannot fix.',
     ogType: 'article',
     breadcrumbName: 'Unicode Normalization Explained',
   },
@@ -185,9 +185,9 @@ const BLOG_SEO: Record<string, PageSeoConfig> = {
     breadcrumbName: 'How to Remove Invisible Characters',
   },
   'zero-width-space-u200b-explained': {
-    title: 'Zero Width Space (U+200B): What It Is and How to Remove It',
+    title: 'Zero Width Space (U+200B / \\u200b): What It Is & How to Remove It',
     description:
-      'What U+200B (ZERO WIDTH SPACE) is, why it is invisible, when it is useful, when copied text picks it up accidentally, and how to detect and remove it.',
+      'U+200B ZERO WIDTH SPACE explained: what \\u200b, &#x200B; and %E2%80%8B mean, why it is invisible, and how to remove it in a browser, JavaScript, Python, or Word.',
     ogType: 'article',
     breadcrumbName: 'Zero Width Space (U+200B)',
   },
